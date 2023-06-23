@@ -70,6 +70,11 @@ const server = new ApolloServer({
 
 ### 4. Start Apollo Server Using Your Inigo Token
 
+Using the Inigo token from the setup process, put it in an environment variable `INIGO_SERVICE_TOKEN`. You can then start the server with `npm start`.
+
 ```shell
-INIGO_SERVICE_TOKEN="eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9..." npm start
+export INIGO_SERVICE_TOKEN="eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9..."
+npm start
 ```
+
+Next, go to Apollo Studio at http://localhost:4000 and execute GraqhQL queries. After the query execution, they will be visible in Inigo Analytics.
