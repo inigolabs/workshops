@@ -1,0 +1,27 @@
+{
+  "name": "federation-demo",
+  "main": "gateway.js",
+  "scripts": {
+    "start-gateway": "nodemon gateway.js",
+    "start-service-accounts": "nodemon services/accounts/index.js",
+    "start-service-reviews": "nodemon services/reviews/index.js",
+    "start-service-products": "nodemon services/products/index.js",
+    "start-service-inventory": "nodemon services/inventory/index.js",
+    "start-services": "concurrently \"npm:start-service-*\"",
+    "install:accounts": "cd services/accounts && npm install",
+    "install:inventory": "cd services/inventory && npm install",
+    "install:products": "cd services/products && npm install",
+    "install:reviews": "cd services/reviews && npm install",
+    "postinstall": "run-p install:*"
+  },
+  "devDependencies": {
+    "npm-run-all": "latest",
+    "nodemon": "latest",
+    "concurrently": "latest"
+  },
+  "dependencies": {
+    "@apollo/gateway": "latest",
+    "apollo-server": "latest",
+    "graphql": "latest"
+  }
+}
