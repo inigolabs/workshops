@@ -179,9 +179,14 @@ inigo login github
 
 You must use the Inigo CLI to create a `Service` and apply a `Gateway` configuration to set up this demo.
 
-```
+```shell
 inigo create service apollo-gateway-demo
 inigo create token apollo-gateway-demo
+```
+
+Keep the token handy! You will need it when deploying Apollo Gateway with Inigo.
+
+```shell
 inigo apply inigo/gateway.yml
 ```
 
@@ -200,6 +205,19 @@ spec:
       url: "http://localhost:4003/graphql"
     - name: inventory
       url: "http://localhost:4004/graphql"
+```
+
+Now when you run `inigo get service` you should see `apollo-gateway-demo` with its subgraph services:
+
+```shell
+inigo get service
+NAME                 LABEL      INSTANCES  STATUS
+----                 -----      ---------  ------
+apollo-gateway-demo             0          Not Running
+- accounts                      0          Not Running
+- reviews                       0          Not Running
+- products                      0          Not Running
+- inventory                     0          Not Running
 ```
 
 Now Inigo is prepared for your subgraphs!
@@ -221,20 +239,49 @@ npm install inigo-windows-amd64
 npm install inigo-darwin-arm64
 ```
 
+### Make the code changes.
 
+Open `gateway.js` in your favorite JavaScript editor. In the file, you will see, for your convenience, comment blocks of code that are necessary to setup Inigo. 
+
+You must uncomment every block of code under each `//INIGO:` comment, for example:
+
+```js
+// INIGO: Uncomment below:
+const { InigoPlugin, InigoRemoteDataSource, InigoFetchGatewayInfo } = require("inigo.js");
+```
+
+When you uncomment these lines of code, notice what the purpose is of each. When they are all uncommented, you will be able to run Apollo Gateway with the Inigo agent installed and configured for it.
 
 ### Restart the Apollo Gateway
 
-In the terminal currently running the Apollo Gateway, `CTRL+C` and run again:
+Now that Inigo is installed, in the terminal currently running the Apollo Gateway, `CTRL+C` to stop it.
+
+### Run the Gateway with `INIGO_SERVICE_TOKEN`
 
 ```sh
+export INIGO_SERVICE_TOKEN="ey..."
 npm run start-gateway
 ```
 
-Go to the Apollo Sandbox again http://localhost:4000
+> You will see additional logging statements coming from Inigo via the Apollo Gateway. You can ignore these logs unless some problem occurs.
+
+Optionally, you can check the service again to see that it's `Running`.
+
+```sh
+inigo get service                       
+NAME                 LABEL      INSTANCES  STATUS
+----                 -----      ---------  ------
+apollo-gateway-demo             1          Running
+- accounts                      1          Running
+- reviews                       1          Running
+- products                      1          Running
+- inventory                     1          Running
+```
+
+Go to the Apollo Sandbox again at http://localhost:4000
 
 
-Run the `my_reviewed_products_to_buy_again` query again to hit all 4 GraphQL microservices. The data from this query execution will now be forwarded to Inigo.
+Run the `my_reviewed_products_to_buy_again` query again to hit all 4 GraphQL microservices. The data from this federated query execution will now be forwarded to Inigo!
 
 ```graphql
 query my_reviewed_products_to_buy_again {
@@ -252,3 +299,21 @@ query my_reviewed_products_to_buy_again {
   }
 }
 ```
+
+Now run the query several time to send additional data to Inigo.
+
+> Note: It wll likely take a moment or two for the data to show up in Inigo. Please be patient!
+
+### Viewing the Results in Inigo
+
+In https://app.inigo.io you will be able to view the federated GraphQL query that you run, the subgraph GraphQL queries, and Inigo Analytics independently for each of them.
+
+![](images/apollo-gateway-demo-query.png)
+
+![](images/accounts-query.png)
+
+![](images/products-query.png)
+
+![](images/inventory-query.png)
+
+![](images/reviews-query.png)
