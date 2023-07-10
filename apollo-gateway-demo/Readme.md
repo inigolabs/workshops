@@ -5,9 +5,9 @@
 
 This demo showcases four partial schemas running as federated microservices. Inigo will be added to provide observability to the federated graph.
 
-To learn more about Apollo Federation, check out the [docs](https://www.apollographql.com/docs/apollo-server/federation/introduction)
+To learn more about Apollo Federation, check out the [docs](https://www.apollographql.com/docs/apollo-server/federation/introduction).
 
-### Installation
+### Demo Installation
 
 To run this demo locally, pull down the repository then run the following commands:
 
@@ -16,7 +16,7 @@ cd apollo-gateway-demo
 npm install
 ```
 
-### Run Apollo Server Microservices
+### Run Demo Microservices
 
 This will install all of the dependencies for the gateway and each underlying service.
 
@@ -30,6 +30,20 @@ This command will run all of the microservices at once. They can be found at htt
 
 #### Accounts Service Sample Query
 
+Here is the GraphQL schema for Accounts:
+
+```graphql
+  extend type Query {
+    me: User
+  }
+
+  type User @key(fields: "id") {
+    id: ID!
+    name: String
+    username: String
+  }
+```
+
 Go to http://localhost:4001
 
 ```graphql
@@ -42,6 +56,21 @@ query me {
 ```
 
 #### Products Service Sample Query
+
+Here is the GraphQL schema for Products:
+
+```graphql
+  extend type Query {
+    topProducts(first: Int = 5): [Product]
+  }
+
+  type Product @key(fields: "upc") {
+    upc: String!
+    name: String
+    price: Int
+    weight: Int
+  }
+```
 
 Go to http://localhost:4003
 
