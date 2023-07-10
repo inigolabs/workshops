@@ -1,5 +1,8 @@
 # Apollo Gateway + Inigo Demo
-> This demo currently uses Apollo Server v3 and Apollo Gateway v2 which are deprecated.
+
+You may jump ahead [Inigo Setup](inigo-setup) if you already have this project running and already know how Apollo Gateway works.
+
+> This demo currently uses Apollo Server v3 and Apollo Gateway v2 which are deprecated. This demo will be updated to the latest versions in the future.
 
 ## Apollo Gateway Demo Application Setup
 
