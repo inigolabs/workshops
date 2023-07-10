@@ -1,6 +1,6 @@
 const { ApolloServer } = require("apollo-server");
 const { ApolloGateway, IntrospectAndCompose } = require("@apollo/gateway");
-// INIGO:
+// INIGO: Uncomment below:
 // const { InigoPlugin, InigoRemoteDataSource, InigoFetchGatewayInfo } = require("inigo.js");
 
 const supergraphSdl = new IntrospectAndCompose({
