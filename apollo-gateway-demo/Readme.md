@@ -224,7 +224,7 @@ Now Inigo is prepared for your subgraphs!
 
 ## Apollo Gateway Setup
 
-### Install the NPM Modules
+### Install the NPM Modules for Inigo
 
 ```
 npm install inigo.js
@@ -239,7 +239,7 @@ npm install inigo-windows-amd64
 npm install inigo-darwin-arm64
 ```
 
-### Make the code changes.
+### Make the Code Changes for the Inigo Agent
 
 Open `gateway.js` in your favorite JavaScript editor. In the file, you will see, for your convenience, comment blocks of code that are necessary to setup Inigo. 
 
@@ -300,7 +300,7 @@ query my_reviewed_products_to_buy_again {
 }
 ```
 
-Now run the query several time to send additional data to Inigo.
+Now run the query several times to send additional data to Inigo.
 
 > Note: It wll likely take a moment or two for the data to show up in Inigo. Please be patient!
 
@@ -319,3 +319,5 @@ Here are screenshots showing the specific outputs for the federated GraphQL quer
 ![](images/inventory-query.png)
 
 ![](images/reviews-query.png)
+
+In each Service and subgraph Service, you can explore each of the queries independently to learn about their performance and utilization attributes.
