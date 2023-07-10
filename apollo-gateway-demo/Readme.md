@@ -308,6 +308,8 @@ Now run the query several time to send additional data to Inigo.
 
 In https://app.inigo.io you will be able to view the federated GraphQL query that you run, the subgraph GraphQL queries, and Inigo Analytics independently for each of them.
 
+Here are screenshots showing the specific outputs for the federated GraphQL query. The red boxes show the menu where the Services are selected. This will help you navigate to the correct location in Inigo.
+
 ![](images/apollo-gateway-demo-query.png)
 
 ![](images/accounts-query.png)
