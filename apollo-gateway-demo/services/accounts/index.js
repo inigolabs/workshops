@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer, gql, ApolloError } = require("apollo-server");
 const { buildFederatedSchema } = require("@apollo/federation");
 
 const typeDefs = gql`
@@ -13,9 +13,19 @@ const typeDefs = gql`
   }
 `;
 
+var count = 0;
+
 const resolvers = {
   Query: {
     me() {
+      count++
+      if(count % 7 == 0) {
+        throw new ApolloError('Darn! Something went very wrong!');
+      }
+      else if (count % 5 == 0) {
+        var waitTill = new Date(new Date().getTime() + 1000);
+        while(waitTill > new Date()){}
+      }
       return users[0];
     }
   },
