@@ -324,3 +324,17 @@ Here are screenshots showing the specific outputs for the federated GraphQL quer
 ![](images/reviews-query.png)
 
 In each Service and subgraph Service, you can explore each of the queries independently to learn about their performance and utilization attributes.
+
+# Clean Up
+
+Shut down the Apollo Gateway to disconnect the agent. Wait 10 minutes.
+
+```shell
+inigo delete service apollo-gateway-demo
+inigo delete service accounts
+inigo delete service reviews
+inigo delete service products
+inigo delete service inventory
+```
+
+This process will be simplified in an upcoming release of Inigo.
