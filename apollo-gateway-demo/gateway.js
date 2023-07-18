@@ -1,7 +1,7 @@
 const { ApolloServer } = require("apollo-server");
 const { ApolloGateway, IntrospectAndCompose } = require("@apollo/gateway");
 // INIGO: Uncomment below:
-// const { InigoPlugin, InigoRemoteDataSource, InigoFetchGatewayInfo } = require("inigo.js");
+const { InigoPlugin, InigoRemoteDataSource, InigoFetchGatewayInfo } = require("inigo.js");
 
 const supergraphSdl = new IntrospectAndCompose({
   subgraphs: [
@@ -13,37 +13,37 @@ const supergraphSdl = new IntrospectAndCompose({
 });
 
 // INIGO: use InigoRemoteDataSource instead of RemoteGraphQLDataSource.
-// class CustomRemoteDataSource extends InigoRemoteDataSource {
-//   async onBeforeSendRequest({ request, context }) {
-//     if (context.req && context.req.headers) {
-//       // pass all headers to subgraphs
-//       Object.keys(context.headers || []).forEach((key) => {
-//         if (context.headers[key]) {
-//           request.http.headers.set(key, context.headers[key]);
-//         }
-//       });
-//     }
-//   }
-//   async onAfterReceiveResponse({ request, response, context }) {
-//     return response;
-//   }
-// }
+class CustomRemoteDataSource extends InigoRemoteDataSource {
+  async onBeforeSendRequest({ request, context }) {
+    if (context.req && context.req.headers) {
+      // pass all headers to subgraphs
+      Object.keys(context.headers || []).forEach((key) => {
+        if (context.headers[key]) {
+          request.http.headers.set(key, context.headers[key]);
+        }
+      });
+    }
+  }
+  async onAfterReceiveResponse({ request, response, context }) {
+    return response;
+  }
+}
 
 (async () => {
 
   // INIGO: InigoPlugin must be instantiated before ApolloGateway is started
-  // const inigoPlugin = InigoPlugin();
+  const inigoPlugin = InigoPlugin();
 
   // INIGO: execute InigoFetchGatewayInfo() and use the result as a param for your custom data source
-  // const info = await InigoFetchGatewayInfo();
+  const info = await InigoFetchGatewayInfo();
 
   const gateway = new ApolloGateway({
     supergraphSdl,
     __exposeQueryPlanExperimental: true,
     // INIGO:
-    // buildService(service) {
-    //   return new CustomRemoteDataSource(service, info, true); 
-    // },
+    buildService(service) {
+      return new CustomRemoteDataSource(service, info, true); 
+    },
   });
 
   const server = new ApolloServer({
@@ -51,9 +51,9 @@ const supergraphSdl = new IntrospectAndCompose({
     engine: false,
     subscriptions: false,
     // INIGO:
-    // plugins: [
-    //   inigoPlugin,
-    // ],
+    plugins: [
+      inigoPlugin,
+    ],
   });
 
   server.listen().then(({ url }) => {
