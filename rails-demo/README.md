@@ -1,5 +1,23 @@
 # Inigo Ruby on Rails Demo
 
+## TLDR
+
+```shell
+bundle install
+bin/rails db:migrate
+bin/rails server
+```
+
+Go to http://localhost:3000/graphiql
+
+```graphql
+query {
+  users {
+    name
+  }
+}
+```
+
 ## Ruby and Rails Installation
 
 This guide assumes that you have macOS and need to install/upgrade Ruby and Rails.
