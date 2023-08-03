@@ -1,6 +1,12 @@
 # Inigo Ruby on Rails Demo
 
-## TLDR
+The official Inigo Ruby on Rails documentation can be found at https://docs.inigo.io/deployment/ruby_on_rails
+
+## Setup and Run with Inigo
+
+This demo application already has the code changes included from the official documentation.
+
+### Build and Run the Demo Application
 
 ```shell
 bundle install
@@ -8,23 +14,41 @@ bin/rails db:migrate
 bin/rails server
 ```
 
+### Create the Inigo Service
+
+```shell
+inigo create service rails-demo
+inigo create token rails-demo
+```
+
+> Keep the Inigo token handy for configuring the Inigo Middleware.
+
+### Run the Rails demo with Inigo Middleware
+
+```shell
+export INIGO_SERVICE_TOKEN="ey..."
+bin/rails server
+```
+
 Go to http://localhost:3000/graphiql
 
 ```graphql
-query {
+query users {
   users {
     name
   }
 }
 ```
 
-## Ruby and Rails Installation
+## Ruby on Rails GraphQL Setup
+
+The following secions contain pertinent information for setting up a Rails application with Ruby GraphQL.
+
+### Ruby on Rails Installation
 
 This guide assumes that you have macOS and need to install/upgrade Ruby and Rails.
 
-### Install Ruby 2.7
-
-Your Mac likely still only has Ruby 2.6, but Rails requires Ruby 2.7+. Here is the best way to install Ruby 2.7:
+#### Install Ruby 3.1 or Greater (Needed by Inigo)
 
 ```shell
 ruby --version
@@ -41,18 +65,18 @@ source ${HOME}/.rvm/scripts/rvm
 
 brew install openssl@1.1
 
-rvm install 2.7.8 --with-openssl-dir=$(brew --prefix)/opt/openssl@1.1
+rvm install 3.1.4 --with-openssl-dir=$(brew --prefix)/opt/openssl@1.1
 
 ruby --version
 ```
 
-### Install Rails
+#### Install Rails
 
 ```shell
 gem install rails
 ```
 
-## Install GraphQL Ruby
+#### Install GraphQL Ruby
 
 ```shell
 bundle add graphql
@@ -60,15 +84,15 @@ rails generate graphql:install
 bundle install
 ```
 
-## Define a GraphQL Schema
+#### Define a GraphQL Schema
 
-### Automatically
+##### Automatically
 
 ```shell
 rails g graphql:object User name:String username:String
 ```
 
-### Manually
+##### Manually
 
 Make a `app/graphql/types/user_type.rb` file and add a new `UserType`:
 
@@ -89,19 +113,12 @@ Add to `app/graphql/types/query_type.rb`:
     end
 ```
 
-## Define a `User` model
+#### Define a `User` model
 
 ```shell
 bin/rails generate model User name:string username:string
 bin/rails db:migrate
 ```
-
-
-# References
-
-1. https://github.com/rmosolgo/graphiql-rails
-1. 
-
 
 
 
