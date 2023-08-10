@@ -5,7 +5,7 @@
 #
 
 users = User.create([
-    {id:1, name: "Eric Murphy", username: "murphye"}
+    {name: "Eric Murphy", username: "murphye"}
 ])
 
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
