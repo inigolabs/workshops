@@ -1,0 +1,14 @@
+query get_article_details {
+  article {
+    title
+    content
+    author {
+      name
+    }
+    tags {
+      tag {
+        tag_value
+      }
+    }
+  }
+}

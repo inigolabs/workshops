@@ -1,0 +1,14 @@
+query get_author_articles {
+  author {
+    name
+    articles {
+      title
+      content
+      tags {
+        tag {
+          tag_value
+        }
+      }
+    }
+  }
+}

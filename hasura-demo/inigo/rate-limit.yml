@@ -1,0 +1,14 @@
+kind: RateLimit
+name: hasura-demo
+spec:
+  profile_default_values:
+    path_calls:
+      - path: query
+        allowance: 5
+        period: 10s
+  profiles:
+    - name: anonymous
+      path_calls:
+      - path: mutation
+        allowance: 2
+        period: 10s

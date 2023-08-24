@@ -1,0 +1,188 @@
+query get_author_articles_dos {
+  author {
+    name
+    articles {
+      title
+      tags {
+        tag {
+          tag_value
+        }
+      }
+      author {
+        articles {
+          title
+          tags {
+            tag {
+              tag_value
+            }
+          }
+          author {
+            name
+            articles {
+              title
+              tags {
+                tag {
+                  tag_value
+                }
+              }
+              author {
+                name
+                articles {
+                  title
+                  tags {
+                    tag {
+                      tag_value
+                    }
+                  }
+                  author {
+                    name
+                    articles {
+                      title
+                      tags {
+                        tag {
+                          tag_value
+                        }
+                      }
+                      author {
+                        name
+                        articles {
+                          title
+                          tags {
+                            tag {
+                              tag_value
+                            }
+                          }
+                          author {
+                            name
+                            articles {
+                              title
+                              tags {
+                                tag {
+                                  tag_value
+                                }
+                              }
+                              author {
+                                name
+                                articles {
+                                  title
+                                  tags {
+                                    tag {
+                                      tag_value
+                                    }
+                                  }
+                                  author {
+                                    name
+                                    articles {
+                                      title
+                                      tags {
+                                        tag {
+                                          tag_value
+                                        }
+                                      }
+                                      author {
+                                        name
+                                        articles {
+                                          title
+                                          tags {
+                                            tag {
+                                              tag_value
+                                            }
+                                          }
+                                          author {
+                                            name
+                                            articles {
+                                              title
+                                              tags {
+                                                tag {
+                                                  tag_value
+                                                }
+                                              }
+                                              author {
+                                                name
+                                                articles {
+                                                  title
+                                                  tags {
+                                                    tag {
+                                                      tag_value
+                                                    }
+                                                  }
+                                                  author {
+                                                    name
+                                                    articles {
+                                                      title
+                                                      tags {
+                                                        tag {
+                                                          tag_value
+                                                        }
+                                                      }
+                                                      author {
+                                                        name
+                                                        articles {
+                                                          title
+                                                          tags {
+                                                            tag {
+                                                              tag_value
+                                                            }
+                                                          }
+                                                          author {
+                                                            name
+                                                            articles {
+                                                              title
+                                                              tags {
+                                                                tag {
+                                                                  tag_value
+                                                                }
+                                                              }
+                                                              author {
+                                                                name
+                                                                articles {
+                                                                  title
+                                                                  tags {
+                                                                    tag {
+                                                                      tag_value
+                                                                    }
+                                                                  }
+                                                                  author {
+                                                                    name
+                                                                    articles {
+                                                                      title
+                                                                      tags {
+                                                                        tag {
+                                                                          tag_value
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+mutation insert_article {
+  insert_article(objects: {
+    title: "Introducing Hasura Support for Inigo", 
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
+    author: {data: {name: "Eric Murphy"}}, 
+    tags: {data: [
+        {tag: {data: {tag_value: "hasura"}}}, 
+        {tag: {data: {tag_value: "inigo"}}}, 
+        {tag: {data: {tag_value: "graphql"}}}]}}) {
+    returning {
+      id
+      title
+      content
+      author {
+        id
+        name
+      }
+      tags {
+        tag {
+          tag_value
+        }
+      }
+    }
+  }
+}

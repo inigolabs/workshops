@@ -1,0 +1,4 @@
+kind: Service
+name: hasura-demo
+spec:
+  anonymous_profile: anonymous
