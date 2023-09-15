@@ -1,6 +1,9 @@
 const { ApolloServer, gql, ApolloError } = require("apollo-server");
-const { readFileSync } = require('fs')
-import { InigoPlugin } from "inigo.js";
+const { readFileSync } = require("fs");
+const { Token } = require("graphql");
+const { InigoPlugin } = require("inigo.js")
+require("fs")
+require("dotenv").config()
 
 const typeDefs = readFileSync(require.resolve('./graphql/schema.graphql')).toString('utf-8')
 
