@@ -1,0 +1,11 @@
+{
+  "name": "accounts",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "apollo-server": "^3.12.1",
+    "graphql": "latest",
+    "inigo.js": "^0.27.8"
+  }
+}
