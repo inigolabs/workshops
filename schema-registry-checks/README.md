@@ -87,7 +87,7 @@ Check out the report in the UI:
 https://app.inigo.io/499/config/activity/1342
 ```
 
-## Apply a Schema Change
+## Apply a Breaking Schema Change
 
 Edit `graphql/schema.graphql` and remove `birthDate` from the schema. Save the change.
 
@@ -133,3 +133,5 @@ https://app.inigo.io/499/config/activity/1343
 
 error: check failed, see report above for details
 ```
+
+
