@@ -1,0 +1,21 @@
+kind: Gateway
+name: apollo-gateway-fed-2-demo
+spec:
+  composition: ApolloFederation_v2
+  services:
+    - name: accounts
+      url: "http://localhost:4001/graphql"
+      schema_files:
+      - ../services/accounts/schema.graphql
+    - name: reviews
+      url: "http://localhost:4002/graphql"
+      schema_files:
+      - ../services/reviews/schema.graphql
+    - name: products
+      url: "http://localhost:4003/graphql"
+      schema_files:
+      - ../services/products/schema.graphql
+    - name: inventory
+      url: "http://localhost:4004/graphql"
+      schema_files:
+      - ../services/inventory/schema.graphql
