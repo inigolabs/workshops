@@ -1,13 +1,16 @@
-# Managed Federation Guide
+# Inigo's Managed Federation for Apollo Federation v2 User Guide
 
-This guide will walk you through how to use Inigo's Managed Federation for Apollo Federation v2.
+This guide will walk you through how to use Inigo's Managed Federation for Apollo Federation v2. Inigo offers a drop-in replacement for existing Apollo Federation (v1 or v2) implementations. Inigo includes schema composition, operational schema checks, a versioned schema registry, and more.
 
-## Set Up a Federated Schema
+## Part A: Composing a Federated Schema Locally
 
-You can use Inigo's `Gateway` configuration to setup your Apollo Federation v2 configuration as such:
+Using the `inigo` CLI, you can locally compose your federated schema for development purposes, and then when you are ready, you can publish the federated schema to the Inigo Cloud.
 
-`gateway.yml`
+### 1. Set Up a Federated Schema
 
+You can use Inigo's `Gateway` configuration to setup your Apollo Federation v2 configuration. This configuration references your local subgraph schemas, as shown in this example:
+
+File: `gateway.yaml`
 ```yaml
 kind: Gateway
 name: apollo-gateway-fed-2-demo
@@ -32,9 +35,9 @@ spec:
       - ../services/inventory/schema.graphql
 ```
 
-This configuration file is similar to Apollo's Supergraph configuration file, which is no longer required.
+This configuration file is similar to Apollo's Supergraph configuration file, and it's no longer needed when using Inigo.
 
-`supergraph-config.yaml`
+File: `supergraph-config.yaml`
 ```yaml
 federation_version: 2
 subgraphs:
@@ -56,10 +59,18 @@ subgraphs:
       file: ./services/inventory/schema.graphql
 ```
 
+### 2. Compose the Local Federated Schema
 
-## Publish a Federated Schema
+Now with the `gateway.yaml`, you are ready to compose a federated schema as such:
 
-1. Run `inigo apply inigo/gateway.yml` to apply the composed schema for the first time
+1. `cd apollo-gateway-fed-2-demo`
+1. `inigo compose ./inigo/gateway.yaml > supergraph.graphql`
+
+With the generated `supergraph.graphql`, you can run with a local Apollo Gateway or Apollo Router as needed.
+
+## Part B: Publish a Federated Schema to the Inigo Cloud
+
+1. Run `inigo apply inigo/gateway.yaml` to apply the composed schema for the first time
 2. Run `inigo publish apollo-gateway-fed-2-demo` to publish the composed schema the first time
 
 
@@ -69,8 +80,8 @@ For this scenario, add a new field (non-breaking change) to the schema, check fo
 publish the changes for the composed schema.
 
 1. Add `inStock: Boolean` to `apollo-gateway-fed-2-demo/services/inventory/schema.graphql`
-2. Run `inigo check inigo/gateway.yml` to check for breaking changes
-3. Run `inigo apply inigo/gateway.yml` to apply the changes for the composed schema
+2. Run `inigo check inigo/gateway.yaml` to check for breaking changes
+3. Run `inigo apply inigo/gateway.yaml` to apply the changes for the composed schema
 4. Run `inigo publish apollo-gateway-fed-2-demo` to publish the composed schema with the change
 
 The updated schema should be published successfully. You will now be able to run a query with the `inStock` field as such:
@@ -97,7 +108,7 @@ query my_reviewed_products_to_buy_again_instock {
 ## Create a Breaking Change
 
 1. Remove `inStock: Boolean` from `apollo-gateway-fed-2-demo/services/inventory/schema.graphql`
-2. Run `inigo check inigo/gateway.yml`
+2. Run `inigo check inigo/gateway.yaml`
 3. Expected output of the command will be:
 
 ```
@@ -125,7 +136,7 @@ BREAKING: Field Product.inStock was removed.
 ## Override and Publishing a Breaking Change
 If you are confident that your breaking change will not impact your clients and you would like to override and publish, this is possible by running the following commands:
 
-1. Run `inigo apply inigo/gateway.yml`
+1. Run `inigo apply inigo/gateway.yaml`
 2. Expected output of the command will be:
 ```
 Detected 1 breaking change(s), 0 non-breaking change(s).
@@ -146,7 +157,7 @@ Execute the below command to ignore this failure on the next run:
 >  inigo bypass apply a744b33833edff5450cd0bd3887e03b4b6d0a003
 ```
 3. Run `inigo bypass apply a744b33833edff5450cd0bd3887e03b4b6d0a003`
-4. Run `inigo apply inigo/gateway.yml` again
+4. Run `inigo apply inigo/gateway.yaml` again
 5. Expected output of the command will be:
 ```
 Detected 1 breaking change(s), 0 non-breaking change(s).
@@ -209,6 +220,6 @@ The `inStock` field has been removed from the published schema, and the error is
 If, for some reason, you wish you publish your schema without running checks, this is also possible. 
 
 1. Remove `inStock` from `apollo-gateway-fed-2-demo/services/inventory/schema.graphql`
-2. Run `inigo apply inigo/gateway.yml --bypass-operational-check` to skip the operation check on the next apply
-3. Run `inigo apply inigo/gateway.yml` to apply the changes for the composed schema
+2. Run `inigo apply inigo/gateway.yaml --bypass-operational-check` to skip the operation check on the next apply
+3. Run `inigo apply inigo/gateway.yaml` to apply the changes for the composed schema
 4. Run `inigo publish apollo-gateway-fed-2-demo` to publish the composed schema with the breaking change
