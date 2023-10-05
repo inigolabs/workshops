@@ -150,10 +150,10 @@ apollo-gateway-fed-2-demo  dev       1          Not Running
 
 Go to the Apollo Sandbox at http://localhost:4000
 
-Run the `my_reviewed_products_to_buy_again` query. This query runs against all 4 GraphQL microservices. The data from this federated query execution will now be forwarded to Inigo!
+Run the `my_reviewed_products_to_buy_again` query. This query runs against all 4 GraphQL microservices. The data from this federated query execution will now be forwarded to Inigo as well.
 
 ```graphql
-query my_reviewed_products_to_buy_again {
+query my_reviewed_products_to_buy_again_local {
   me {
     name
     reviews {
