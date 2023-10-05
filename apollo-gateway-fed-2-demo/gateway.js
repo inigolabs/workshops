@@ -16,7 +16,7 @@ var apolloGatewayConfig;
 // 4. If you change your local subgraph schemas, run "inigo compose" again and restart the gateway
 
 if(process.env.LOCAL_COMPOSED_SCHEMA) {
-    console.log("💻  You're using a federated schema from .env.LOCAL_COMPOSED_SCHEMA");
+    console.log("💻  You're using a local federated schema from .env.LOCAL_COMPOSED_SCHEMA");
     var supergraphSdl = resolve(cwd, process.env.LOCAL_COMPOSED_SCHEMA);
     apolloGatewayConfig = {
         supergraphSdl: readFileSync(supergraphSdl, "utf-8")
@@ -46,6 +46,7 @@ const server = new ApolloServer({
 startStandaloneServer(server, {
   listen: { port: 4000 },
 }).then(({ url }) => console.log(`🚀  Supergraph ready at ${url}`));
+
 
 // Optionally needed for headers to be propagated to the subgraphs
 class CustomRemoteDataSource extends InigoRemoteDataSource {
