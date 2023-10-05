@@ -1,21 +1,28 @@
-# Apollo Router + Apollo Federation 1.x + Inigo Demo
+# Apollo Gateway + Apollo Federation 2.x + Inigo Demo
 
 You may jump ahead [Inigo Setup](inigo-setup) if you already have this project running and already know how Apollo Gateway works.
 
-> This demo currently uses Apollo Server v3 which is deprecated. This demo will be updated to the latest versions in the future.
+## Apollo Gateway Demo Application Setup
 
-## Apollo Router Demo Application Setup
+This demo showcases four subgraph schemas running as federated GraphQL microservices. Inigo will be added to provide anaytics and management of the federated graph.
 
-This demo showcases four partial schemas running as federated microservices. Inigo will be added to provide observability to the federated graph.
+### Run NPM Install
 
-To learn more about Apollo Federation, check out the [docs](https://www.apollographql.com/docs/apollo-server/federation/introduction).
+```
+npm install
+```
 
-### Demo Installation
 
-To run this demo locally, clone this Git repository to your local machine then change to the directory:
+### Install the NPM Modules for Inigo
 
-```sh
-cd apollo-router-fed-1-demo
+Pick one of the following, depending on your OS and CPU:
+```
+npm install inigo-linux-amd64
+npm install inigo-linux-arm64
+npm install inigo-darwin-amd64
+npm install inigo-darwin-arm64
+npm install inigo-windows-amd64
+npm install inigo-darwin-arm64
 ```
 
 ### Run Demo Microservices
@@ -35,7 +42,19 @@ This command will run all of the microservices at once. They can be found at htt
 Here is the GraphQL schema for Accounts:
 
 ```graphql
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0",
+        import: ["@key", "@shareable"])
 
+extend type Query {
+    me: User
+}
+
+type User @key(fields: "id") {
+    id: ID!
+    name: String
+    username: String @shareable
+}
 ```
 
 Go to http://localhost:4001
@@ -54,7 +73,20 @@ query me {
 Here is the GraphQL schema for Products:
 
 ```graphql
+extend schema
+    @link(url: "https://specs.apollo.dev/federation/v2.0",
+       import: ["@key", "@shareable"])
 
+extend type Query {
+    topProducts(first: Int = 5): [Product]
+}
+
+type Product @key(fields: "upc") {
+    upc: String!
+    name: String
+    price: Int @shareable
+    weight: Int @shareable
+}
 ```
 
 Go to http://localhost:4003
@@ -75,7 +107,17 @@ query topProducts {
 Inventory extends `Product` with inventory information about the product. Here is the federated schema:
 
 ```graphql
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0",
+        import: ["@key", "@external", "@requires"])
 
+type Product @key(fields: "upc") {
+    upc: String!
+    weight: Int @external
+    price: Int @external
+    inStock: Boolean
+    shippingEstimate: Int @requires(fields: "price weight")
+}
 ```
 
 #### Reviews Service Federated Schema
@@ -83,7 +125,27 @@ Inventory extends `Product` with inventory information about the product. Here i
 Reviews provides the federated GraphQL schema that ties together `Review`, `User`, and `Product`.
 
 ```graphql
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0",
+        import: ["@key", "@shareable"])
 
+type Review @key(fields: "id") {
+    id: ID!
+    body: String
+    author: User
+    product: Product
+}
+
+type User @key(fields: "id") {
+    id: ID!
+    username: String @shareable
+    reviews: [Review]
+}
+
+type Product @key(fields: "upc") {
+    upc: String!
+    reviews: [Review]
+}
 ```
 
 ## Inigo Setup
@@ -158,22 +220,7 @@ apollo-gateway-demo             0          Not Running
 
 Now Inigo is prepared for your subgraphs!
 
-## Apollo Gateway Setup
 
-### Install the NPM Modules for Inigo
-
-```
-npm install inigo.js
-```
-Pick one of the following, depending on your OS and CPU:
-```
-npm install inigo-linux-amd64
-npm install inigo-linux-arm64
-npm install inigo-darwin-amd64
-npm install inigo-darwin-arm64
-npm install inigo-windows-amd64
-npm install inigo-darwin-arm64
-```
 
 ### Make the Code Changes for the Inigo Agent
 
