@@ -24,7 +24,6 @@
     "@apollo/server": "latest",
     "graphql": "latest",
     "dotenv": "^16.3.1",
-    "inigo-darwin-arm64": "^0.28.1",
     "inigo.js": "^0.28.1"
   }
 }
