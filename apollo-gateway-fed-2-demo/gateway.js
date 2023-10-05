@@ -14,7 +14,7 @@ var apolloGatewayConfig;
 // 1. Run "inigo compose ./inigo/gateway.yaml > supergraph.graphql"
 // 2. Add "LOCAL_COMPOSED_SCHEMA=supergraph.graphql" to the .env
 // 3. Start the gateway with "npm run start-gateway"
-// 4. If you change your local subgraphs, compose again and restart the gateway
+// 4. If you change your local subgraph schemas, run "inigo compose" again and restart the gateway
 
 if(process.env.LOCAL_COMPOSED_SCHEMA) {
     console.log("💻 You're using a federated schema from .env.LOCAL_COMPOSED_SCHEMA");
