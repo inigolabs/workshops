@@ -1,6 +1,6 @@
 # Apollo Gateway + Apollo Federation 2.x + Inigo Demo
 
-## Apollo Gateway Demo Application Setup
+## Part A: Apollo Gateway Demo Application Setup
 
 This demo showcases four subgraph schemas running as federated GraphQL microservices. Inigo will be added to provide anaytics and management of the federated graph.
 
@@ -24,27 +24,32 @@ npm install inigo-windows-amd64
 npm install inigo-darwin-arm64
 ```
 
-### Run Demo Microservices
+### Run Demo GraphQL Subgraph Microservices
 
-This will install all of the dependencies for the gateway and each underlying service.
+This command will run all of the GraphQL Subgraph microservices at once:
 
 ```sh
 npm run start-services
 ```
 
-This command will run all of the microservices at once. They can be found at http://localhost:4001, http://localhost:4002, http://localhost:4003, and http://localhost:4004.
+They will be running at http://localhost:4001, http://localhost:4002, http://localhost:4003, and http://localhost:4004.
 
+## Part B: Inigo Setup
 
-## Inigo Setup
+Open a new terminal (to keep the GraphQL subgraph services running) and `cd` back into this project directory.
 
-### Install the CLI
+```
+cd apollo-gateway-fed-2-demo
+```
+
+### Install the Inigo CLI (If Not Installed)
 
 ```shell
 brew tap inigolabs/homebrew-tap
 brew install inigo_cli
 ```
 
-or if already installed, upgrade to at minimum >=0.28.1:
+or if already installed, upgrade to at minimum version 0.28.1:
 
 ```
 brew upgrade inigo_cli
@@ -113,7 +118,7 @@ apollo-gateway-fed-2-demo  dev       0          Not Running
 - inventory                dev       0          Not Running
 ```
 
-## Inigo Setup for Apollo Federation Local Composition
+## Part C: Inigo Setup for Apollo Federation Local Composition
 
 ### Setup the `.env` for Local Composition
 
@@ -133,20 +138,7 @@ inigo compose ./inigo/gateway.yaml > supergraph.graphql
 npm run start-gateway
 ```
 
-> You will see additional logging statements coming from Inigo via the Apollo Gateway. You can ignore these logs unless some problem occurs.
-
-Optionally, you can check the service again to see that it's `Running`.
-
-```sh                     
-inigo get service
-NAME                       LABEL     INSTANCES  STATUS
-----                       -----     ---------  ------
-apollo-gateway-fed-2-demo  dev       1          Not Running
-- accounts                 dev       1          Not Running
-- reviews                  dev       1          Not Running
-- products                 dev       1          Not Running
-- inventory                dev       1          Not Running
-```
+> Note: You will see logging statements coming from the Inigo sidecar while running the Apollo Gateway. You can ignore these logs unless some problem occurs.
 
 Go to the Apollo Sandbox at http://localhost:4000
 
@@ -170,8 +162,6 @@ query my_reviewed_products_to_buy_again_local {
   }
 }
 ```
-
-
 
 # Clean Up
 
