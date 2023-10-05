@@ -76,13 +76,13 @@ inigo create token apollo-gateway-fed-2-demo:dev
 
 Copy the token, which will look like `eyJhbGciOiJIUzU...`. **Keep the token handy!** You will need it when deploying Apollo Gateway with Inigo.
 
-### Apply the Inigo `Gateway`
+### Apply the Inigo `Gateway` and `Subgraph`s
 
 ```shell
 inigo apply inigo/gateway.yaml
 ```
 
-The `gateway.yaml` configuration sets up the subgraph services and looks like this:
+The `gateway.yaml` configuration sets up the `Gateway` and looks like this:
 
 ```yaml
 kind: Gateway
@@ -90,23 +90,26 @@ name: apollo-gateway-fed-2-demo
 label: dev
 spec:
   composition: ApolloFederation_v2
-  services:
-    - name: accounts
-      url: "http://localhost:4001/graphql"
-      schema_files:
-      - ../services/accounts/schema.graphql
-    - name: reviews
-      url: "http://localhost:4002/graphql"
-      schema_files:
-      - ../services/reviews/schema.graphql
-    - name: products
-      url: "http://localhost:4003/graphql"
-      schema_files:
-      - ../services/products/schema.graphql
-    - name: inventory
-      url: "http://localhost:4004/graphql"
-      schema_files:
-      - ../services/inventory/schema.graphql
+```
+
+The subgraphs can optionally be broken out into their `Subgraph` definitions. For example, here is the accounts subgraph that is located in 
+`services/accounts/subgraph.yaml`.
+
+```yaml
+kind: Subgraph
+name: apollo-gateway-fed-2-demo
+spec: 
+  gateway: apollo-gateway-fed-2-demo
+  url: "http://localhost:4001/graphql"
+  schema_files:
+  - ./schema.graphql
+```
+
+```shell
+inigo apply services/accounts/subgraph.yaml
+inigo apply services/inventory/subgraph.yaml
+inigo apply services/products/subgraph.yaml
+inigo apply services/reviews/subgraph.yaml
 ```
 
 Now when you run `inigo get service` you should see `apollo-gateway-fed-2-demo:dev` with its subgraph services, but they will not yet be running:
@@ -133,7 +136,7 @@ You can leave the `LOCAL_COMPOSED_SCHEMA=supergraph.graphql` for now unless you 
 ## Run the Local Composition to Generate the Federated Schema
 
 ```shell
-inigo compose ./inigo/gateway.yaml > supergraph.graphql
+inigo compose inigo/gateway.yaml > supergraph.graphql
 ```
 
 ### Start the Apollo Gateway

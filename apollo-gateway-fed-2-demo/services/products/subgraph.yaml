@@ -1,0 +1,7 @@
+kind: Subgraph
+name: apollo-gateway-fed-2-demo
+spec: 
+  gateway: apollo-gateway-fed-2-demo
+  url: "http://localhost:4003/graphql"
+  schema_files:
+  - ./schema.graphql
