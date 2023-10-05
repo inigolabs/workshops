@@ -374,7 +374,7 @@ In your Apollo Gateway logs you should have a log containing the message:
 applySchema : new schema is reported
 ```
 
-Apollo Gateway is now dynamically reconfigured to use v2 of the schema.
+Apollo Gateway is now dynamically reconfigured to use v2 of the schema. This can be proven by running a query that contains the `inStock` field.
 
 ![](images/broken-query.png)
 
