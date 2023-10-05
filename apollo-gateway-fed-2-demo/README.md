@@ -2,7 +2,7 @@
 
 This demo application showcases four subgraph schemas running as federated GraphQL microservices. Inigo will be added to provide analytics and management of the federated graph.
 
-This guide will walk through the step-by-step of how to configure and run Apollo Federation 2.0 with Inigo, and includes how to do local composition and pushing to Inigo's schema registry.
+This guide will walk through the step-by-step of how to configure and run Apollo Federation 2.0 with Inigo and Apollo Gateway, and covers how to do local composition and pushing to Inigo's schema registry. in this scenario, a breaking change will be introduced, forcefully published, and then rolled back.
 
 ## Part A: Apollo Gateway Demo Application Setup
 
