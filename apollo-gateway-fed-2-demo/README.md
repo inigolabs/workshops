@@ -140,11 +140,9 @@ npm run start-gateway
 
 > Note: You will see logging statements coming from the Inigo sidecar while running the Apollo Gateway. You can ignore these logs unless some problem occurs.
 
-Go to the Apollo Sandbox at http://localhost:4000
+Go to the Apollo Sandbox at http://localhost:4000 or configure the Inigo Explorer to call http://localhost:4000.
 
 Run the `my_reviewed_products_to_buy_again_local` query. This query runs against all 4 GraphQL microservices.
-
-> Note: This query will not be seen in Analytics due to the setup for the locally composed schema.
 
 ```graphql
 query my_reviewed_products_to_buy_again_local {
@@ -163,7 +161,29 @@ query my_reviewed_products_to_buy_again_local {
 }
 ```
 
-# Clean Up
+After you run the query several times and then go to Inigo Analytics, you will be able to see analytics data for `my_reviewed_products_to_buy_again_local`.
+
+## Part D: Inigo Setup for Apollo Federation Schema Registry
+
+### Publishing a Schema for the First Time
+
+The next step, after running with a locally composed schema, is to publish your schema to the Inigo schema registry. This can be done with the following command:
+
+```shell
+inigo publish apollo-gateway-fed-2-demo:dev
+```
+
+Here is the expected output for the first time you publish a schema:
+
+```
+apollo-gateway-fed-2-demo % inigo publish apollo-gateway-fed-2-demo:dev
+Schema v1 published successfully!
+```
+
+![](images/schema-first-publish.png)
+
+
+## Clean Up
 
 Shut down the Apollo Gateway to disconnect the agent. You must wait about 10 minutes to no longer be in a `Running` state before you can `delete`.
 
