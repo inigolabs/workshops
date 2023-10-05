@@ -63,14 +63,14 @@ inigo login (google or github)
 
 ### Setup the Inigo `Service` and get a  token
 
-You must use the Inigo CLI to create a `Service` and apply a `Gateway` configuration to set up this demo.
+You can use the Inigo CLI to create a `Service` and apply a `Gateway` configuration to set up this demo. This could also be done through the UI.
 
 ```shell
 inigo create service apollo-gateway-fed-2-demo:dev
 inigo create token apollo-gateway-fed-2-demo:dev
 ```
 
-Copy the token. **Keep the token handy!** You will need it when deploying Apollo Gateway with Inigo.
+Copy the token, which will look like `eyJhbGciOiJIUzU...`. **Keep the token handy!** You will need it when deploying Apollo Gateway with Inigo.
 
 ### Apply the Inigo `Gateway`
 
@@ -163,6 +163,8 @@ query my_reviewed_products_to_buy_again_local {
 
 After you run the query several times and then go to Inigo Analytics, you will be able to see analytics data for `my_reviewed_products_to_buy_again_local`.
 
+![](images/local-query-analytics.png)
+
 ## Part D: Inigo Setup for Apollo Federation Schema Registry
 
 ### Publishing a Schema for the First Time
@@ -180,7 +182,150 @@ apollo-gateway-fed-2-demo % inigo publish apollo-gateway-fed-2-demo:dev
 Schema v1 published successfully!
 ```
 
+On the Inigo UI you can see the pubish result under `Config` -> `Activity`.
+
 ![](images/schema-first-publish.png)
+
+
+### Introduce a Breaking Schema Change
+
+1. Remove `inStock: Boolean` from the `apollo-gateway-fed-2-demo/services/inventory/schema.graphql` schema file.
+2. Run the check command:
+```shell
+inigo check inigo/gateway.yaml
+```
+The expected output will be:
+```
+apollo-gateway-fed-2-demo % inigo check inigo/gateway.yaml
+Service: apollo-gateway-fed-2-demo:dev
+
+Changelog:
+----------
+gateway/services/inventory/schema_files  updated  
+
+Steps:
+------
+Validation:   passed
+Composition:  passed
+Operational:  failed
+Evaluation:   omitted
+
+Detected 1 breaking change(s), 0 non-breaking change(s).
+New schema is validated against traffic from Tue, 05 Sep 2023 13:55:19 PDT.
+
+Schema changes:
+---------------
+BREAKING: Field Product.inStock was removed.
+  Location: composed:26:2
+    -   inStock: Boolean
+  Usage
+  no usage
+
+
+Execute the below command to ignore this failure on the next run:
+>  inigo bypass check 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
+
+Check out the report in the UI:
+https://app.inigo.io/548/config/activity/2876
+
+error: check failed, see report above for details
+```
+
+On the Inigo UI you can see the breaking change result under `Config` -> `Activity`.
+
+![](images/schema-breaking-change.png)
+
+
+### Override and Publish a Breaking Change
+If you are confident that your breaking change will not impact your clients and you would like to override and publish, this is possible by running the following commands:
+
+1. Run the apply command for the gateway:
+```shell
+inigo apply inigo/gateway.yaml
+```
+The expected output of the command will be:
+```
+apollo-gateway-fed-2-demo % inigo apply inigo/gateway.yaml
+Service: apollo-gateway-fed-2-demo:dev
+
+Changelog:
+----------
+gateway/services/inventory/schema_files  updated  
+
+Steps:
+------
+Validation:   passed
+Composition:  passed
+Operational:  failed
+Evaluation:   omitted
+
+Detected 1 breaking change(s), 0 non-breaking change(s).
+New schema is validated against traffic from Tue, 05 Sep 2023 14:01:32 PDT.
+
+Schema changes:
+---------------
+BREAKING: Field Product.inStock was removed.
+  Location: composed:26:2
+    -   inStock: Boolean
+  Usage
+  no usage
+
+
+Execute the below command to ignore this failure on the next run:
+>  inigo bypass apply 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
+
+Check out the report in the UI:
+https://app.inigo.io/548/config/activity/2878
+
+error: check failed, see report above for details
+```
+
+2. Run the apply commands to overide:
+```shell
+inigo bypass apply 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
+inigo apply inigo/gateway.yaml
+```
+The expected output of the commands will be:
+```
+inigo bypass apply 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
+inigo apply inigo/gateway.yaml
+Feel free to re-run 'apply' of the same config again!
+Service: apollo-gateway-fed-2-demo:dev
+
+Changelog:
+----------
+gateway/services/inventory/schema_files  updated  
+
+Steps:
+------
+Validation:   passed
+Composition:  passed
+Operational:  bypassed
+Evaluation:   passed
+
+Detected 1 breaking change(s), 0 non-breaking change(s).
+New schema is validated against traffic from Tue, 05 Sep 2023 14:03:33 PDT.
+
+Schema changes:
+---------------
+BREAKING: Field Product.inStock was removed.
+  Location: composed:26:2
+    -   inStock: Boolean
+  Usage
+  no usage
+
+New config version 2 is applied 🎉
+
+Check out the report in the UI:
+https://app.inigo.io/548/config/activity/2879
+```
+On the Inigo UI you can see that schema version 2 was applied and that the `Operational` check was bypassed.
+
+![](images/schema-version-2-breaking.png)
+
+
+
+
 
 
 ## Clean Up
