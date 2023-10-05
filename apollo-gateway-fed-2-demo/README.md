@@ -368,9 +368,13 @@ In your Apollo Gateway logs you should have an output of:
 InigoSchemaManager: new schema v2 pulled.
 ```
 
+Apollo Gateway is now dynamically reconfigured to use v2 of the schema.
 
 
 ![](images/broken-query.png)
+
+
+
 
 
 
