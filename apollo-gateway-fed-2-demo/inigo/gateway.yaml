@@ -1,5 +1,6 @@
 kind: Gateway
 name: apollo-gateway-fed-2-demo
+label: dev
 spec:
   composition: ApolloFederation_v2
   services:

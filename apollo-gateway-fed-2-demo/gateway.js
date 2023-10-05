@@ -2,6 +2,36 @@ const { ApolloServer } = require('@apollo/server');
 const { startStandaloneServer } = require('@apollo/server/standalone');
 const { ApolloGateway } = require("@apollo/gateway");
 const { Inigo, InigoRemoteDataSource, InigoSchemaManager } = require("inigo.js");
+const { readFileSync } = require("fs");
+const { readFile} = require('fs/promises');
+const { resolve } = require("path");
+require("dotenv").config()
+
+var cwd = resolve(__dirname, ".");
+var apolloGatewayConfig;
+
+// If you want to use a locally composed schema:
+// 1. Run "inigo compose ./inigo/gateway.yaml > supergraph.graphql"
+// 2. Add "LOCAL_COMPOSED_SCHEMA=supergraph.graphql" to the .env
+// 3. Start the gateway with "npm run start-gateway"
+// 4. If you change your local subgraphs, compose again and restart the gateway
+
+if(process.env.LOCAL_COMPOSED_SCHEMA) {
+    console.log("💻 You're using a federated schema from .env.LOCAL_COMPOSED_SCHEMA");
+    var supergraphSdl = resolve(cwd, process.env.LOCAL_COMPOSED_SCHEMA);
+    apolloGatewayConfig = {
+        supergraphSdl: readFileSync(supergraphSdl, "utf-8")
+    }
+}
+else {
+    console.log("⛅ You're using a federated schema pulled from Inigo's schema repository");
+    apolloGatewayConfig = {
+        supergraphSdl: new InigoSchemaManager(),
+        buildService(service) {
+            return new CustomRemoteDataSource(service, inigo);
+        }
+    }
+}
 
 class CustomRemoteDataSource extends InigoRemoteDataSource {
   async onBeforeSendRequest({ request, context }) {
@@ -17,16 +47,7 @@ class CustomRemoteDataSource extends InigoRemoteDataSource {
 }
 
 const inigo = new Inigo();
-
-const gateway = new ApolloGateway({
-    supergraphSdl: new InigoSchemaManager({
-        endpoint: "https://staging.inigo.io/agent/query", //INIGO_REGISTRY_URL,
-        //onInitError: readInitialSchemaFromFile,
-    }),
-    buildService(service) {
-        return new CustomRemoteDataSource(service, inigo);
-    }
-});
+const gateway = new ApolloGateway(apolloGatewayConfig);
 
 const server = new ApolloServer({
     gateway,

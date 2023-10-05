@@ -178,66 +178,64 @@ inigo login github
 You must use the Inigo CLI to create a `Service` and apply a `Gateway` configuration to set up this demo.
 
 ```shell
-inigo create service apollo-gateway-fed-2-demo
-inigo create token apollo-gateway-fed-2-demo
+inigo create service apollo-gateway-fed-2-demo:dev
+inigo create token apollo-gateway-fed-2-demo:dev
 ```
 
 Keep the token handy! You will need it when deploying Apollo Gateway with Inigo.
 
 ```shell
-inigo apply inigo/gateway.yml
+inigo apply inigo/gateway.yaml
 ```
 
 The `gateway.yaml` configuration sets up the subgraph services and looks like this:
 
 ```yaml
 kind: Gateway
-name: apollo-gateway-demo
+name: apollo-gateway-fed-2-demo
+label: dev
 spec:
+  composition: ApolloFederation_v2
   services:
     - name: accounts
       url: "http://localhost:4001/graphql"
+      schema_files:
+      - ../services/accounts/schema.graphql
     - name: reviews
       url: "http://localhost:4002/graphql"
+      schema_files:
+      - ../services/reviews/schema.graphql
     - name: products
       url: "http://localhost:4003/graphql"
+      schema_files:
+      - ../services/products/schema.graphql
     - name: inventory
       url: "http://localhost:4004/graphql"
+      schema_files:
+      - ../services/inventory/schema.graphql
 ```
 
-Now when you run `inigo get service` you should see `apollo-gateway-demo` with its subgraph services:
+Now when you run `inigo get service` you should see `apollo-gateway-fed-2-demo` with its subgraph services:
 
 ```shell
 inigo get service
-NAME                 LABEL      INSTANCES  STATUS
-----                 -----      ---------  ------
-apollo-gateway-demo             0          Not Running
-- accounts                      0          Not Running
-- reviews                       0          Not Running
-- products                      0          Not Running
-- inventory                     0          Not Running
+NAME                       LABEL     INSTANCES  STATUS
+----                       -----     ---------  ------
+apollo-gateway-fed-2-demo  dev       0          Not Running
+- accounts                 dev       0          Not Running
+- reviews                  dev       0          Not Running
+- products                 dev       0          Not Running
+- inventory                dev       0          Not Running
 ```
 
-Now Inigo is prepared for your subgraphs!
+TODO Publish Subgraph
 
 
 
-### Make the Code Changes for the Inigo Agent
 
-Open `gateway.js` in your favorite JavaScript editor. In the file, you will see, for your convenience, comment blocks of code that are necessary to setup Inigo. 
 
-You must uncomment every block of code under each `//INIGO:` comment, for example:
 
-```js
-// INIGO: Uncomment below:
-const { InigoPlugin, InigoRemoteDataSource, InigoFetchGatewayInfo } = require("inigo.js");
-```
-
-When you uncomment these lines of code, notice what the purpose is of each. When they are all uncommented, you will be able to run Apollo Gateway with the Inigo agent installed and configured for it.
-
-### Restart the Apollo Gateway
-
-Now that Inigo is installed, in the terminal currently running the Apollo Gateway, `CTRL+C` to stop it.
+### Start the Apollo Gateway
 
 ### Run the Gateway with `INIGO_SERVICE_TOKEN`
 

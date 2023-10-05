@@ -14,6 +14,7 @@ File: `gateway.yaml`
 ```yaml
 kind: Gateway
 name: apollo-gateway-fed-2-demo
+label: dev
 spec:
   composition: ApolloFederation_v2
   services:
@@ -71,7 +72,7 @@ With the generated `supergraph.graphql`, you can run with a local Apollo Gateway
 ## Part B: Publish a Federated Schema to the Inigo Cloud
 
 1. Run `inigo apply inigo/gateway.yaml` to apply the composed schema for the first time
-2. Run `inigo publish apollo-gateway-fed-2-demo` to publish the composed schema the first time
+2. Run `inigo publish apollo-gateway-fed-2-demo:dev` to publish the composed schema the first time
 
 
 ## Check for Breaking Changes and Publish a new Schema Version
@@ -82,7 +83,7 @@ publish the changes for the composed schema.
 1. Add `inStock: Boolean` to `apollo-gateway-fed-2-demo/services/inventory/schema.graphql`
 2. Run `inigo check inigo/gateway.yaml` to check for breaking changes
 3. Run `inigo apply inigo/gateway.yaml` to apply the changes for the composed schema
-4. Run `inigo publish apollo-gateway-fed-2-demo` to publish the composed schema with the change
+4. Run `inigo publish apollo-gateway-fed-2-demo:dev` to publish the composed schema with the change
 
 The updated schema should be published successfully. You will now be able to run a query with the `inStock` field as such:
 
@@ -175,7 +176,7 @@ BREAKING: Field Product.inStock was removed.
 
 New config version 4 is applied 🎉
 ```
-6. Run `inigo publish apollo-gateway-fed-2-demo` to publish the composed schema
+6. Run `inigo publish apollo-gateway-fed-2-demo:dev` to publish the composed schema
 7. Run the sample query again to demonstrate the field was removed:
 ```graphql
 query my_reviewed_products_to_buy_again_breaking {
@@ -222,10 +223,10 @@ If, for some reason, you wish you publish your schema without running checks, th
 1. Remove `inStock` from `apollo-gateway-fed-2-demo/services/inventory/schema.graphql`
 2. Run `inigo apply inigo/gateway.yaml --bypass-operational-check` to skip the operation check on the next apply
 3. Run `inigo apply inigo/gateway.yaml` to apply the changes for the composed schema
-4. Run `inigo publish apollo-gateway-fed-2-demo` to publish the composed schema with the breaking change
+4. Run `inigo publish apollo-gateway-fed-2-demo:dev` to publish the composed schema with the breaking change
 
 ## Rollback to a Previous Version of a Schema
 
 It's possible to revert the published federated schema to a prior version. This can be done as such:
 
-1. `inigo publish apollo-gateway-fed-2-demo --version 2`
+1. `inigo publish apollo-gateway-fed-2-demo:dev --version 2`
