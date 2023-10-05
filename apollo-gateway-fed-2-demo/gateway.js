@@ -3,7 +3,6 @@ const { startStandaloneServer } = require('@apollo/server/standalone');
 const { ApolloGateway } = require("@apollo/gateway");
 const { Inigo, InigoRemoteDataSource, InigoSchemaManager } = require("inigo.js");
 const { readFileSync } = require("fs");
-const { readFile} = require('fs/promises');
 const { resolve } = require("path");
 require("dotenv").config()
 
