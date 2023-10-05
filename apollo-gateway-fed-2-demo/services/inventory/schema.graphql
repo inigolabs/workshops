@@ -6,5 +6,6 @@ type Product @key(fields: "upc") {
     upc: String!
     weight: Int @external
     price: Int @external
+    inStock: Boolean
     shippingEstimate: Int @requires(fields: "price weight")
 }
