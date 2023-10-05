@@ -150,7 +150,9 @@ apollo-gateway-fed-2-demo  dev       1          Not Running
 
 Go to the Apollo Sandbox at http://localhost:4000
 
-Run the `my_reviewed_products_to_buy_again` query. This query runs against all 4 GraphQL microservices. The data from this federated query execution will now be forwarded to Inigo as well.
+Run the `my_reviewed_products_to_buy_again_local` query. This query runs against all 4 GraphQL microservices.
+
+> Note: This query will not be seen in Analytics due to the setup for the locally composed schema.
 
 ```graphql
 query my_reviewed_products_to_buy_again_local {
@@ -169,38 +171,16 @@ query my_reviewed_products_to_buy_again_local {
 }
 ```
 
-Now run the query several times to send additional data to Inigo.
 
-> Note: It wll likely take a moment or two for the data to show up in Inigo. Please be patient!
-
-### Viewing the Results in Inigo
-
-In https://app.inigo.io you will be able to view the federated GraphQL query that you run, the subgraph GraphQL queries, and Inigo Analytics independently for each of them.
-
-Here are screenshots showing the specific outputs for the federated GraphQL query. The red boxes show the menu where the Services are selected. This will help you navigate to the correct location in Inigo.
-
-![](images/apollo-gateway-demo-query.png)
-
-![](images/accounts-query.png)
-
-![](images/products-query.png)
-
-![](images/inventory-query.png)
-
-![](images/reviews-query.png)
-
-In each Service and subgraph Service, you can explore each of the queries independently to learn about their performance and utilization attributes.
 
 # Clean Up
 
-Shut down the Apollo Gateway to disconnect the agent. Wait 10 minutes.
+Shut down the Apollo Gateway to disconnect the agent. You must wait about 10 minutes to no longer be in a `Running` state before you can `delete`.
 
 ```shell
-inigo delete service apollo-gateway-demo
-inigo delete service accounts
-inigo delete service reviews
-inigo delete service products
-inigo delete service inventory
+inigo delete service apollo-gateway-fed-2-demo:dev
+inigo delete service accounts:dev
+inigo delete service reviews:dev
+inigo delete service products:dev
+inigo delete service inventory:dev
 ```
-
-This process will be simplified in an upcoming release of Inigo.
