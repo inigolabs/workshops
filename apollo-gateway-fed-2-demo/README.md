@@ -35,118 +35,6 @@ npm run start-services
 
 This command will run all of the microservices at once. They can be found at http://localhost:4001, http://localhost:4002, http://localhost:4003, and http://localhost:4004.
 
-### Sample GraphQL Queries for Individual Services
-
-#### Accounts Service Sample Query
-
-Here is the GraphQL schema for Accounts:
-
-```graphql
-extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0",
-        import: ["@key", "@shareable"])
-
-extend type Query {
-    me: User
-}
-
-type User @key(fields: "id") {
-    id: ID!
-    name: String
-    username: String @shareable
-}
-```
-
-Go to http://localhost:4001
-
-```graphql
-query me {
-  me {
-    name,
-    username
-  }
-}
-```
-
-#### Products Service Sample Query
-
-Here is the GraphQL schema for Products:
-
-```graphql
-extend schema
-    @link(url: "https://specs.apollo.dev/federation/v2.0",
-       import: ["@key", "@shareable"])
-
-extend type Query {
-    topProducts(first: Int = 5): [Product]
-}
-
-type Product @key(fields: "upc") {
-    upc: String!
-    name: String
-    price: Int @shareable
-    weight: Int @shareable
-}
-```
-
-Go to http://localhost:4003
-
-```graphql
-query topProducts {
-  topProducts {
-    name,
-    price,
-    weight,
-    upc
-  }
-}
-```
-
-#### Inventory Service Federated Schema
-
-Inventory extends `Product` with inventory information about the product. Here is the federated schema:
-
-```graphql
-extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0",
-        import: ["@key", "@external", "@requires"])
-
-type Product @key(fields: "upc") {
-    upc: String!
-    weight: Int @external
-    price: Int @external
-    inStock: Boolean
-    shippingEstimate: Int @requires(fields: "price weight")
-}
-```
-
-#### Reviews Service Federated Schema
-
-Reviews provides the federated GraphQL schema that ties together `Review`, `User`, and `Product`.
-
-```graphql
-extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0",
-        import: ["@key", "@shareable"])
-
-type Review @key(fields: "id") {
-    id: ID!
-    body: String
-    author: User
-    product: Product
-}
-
-type User @key(fields: "id") {
-    id: ID!
-    username: String @shareable
-    reviews: [Review]
-}
-
-type Product @key(fields: "upc") {
-    upc: String!
-    reviews: [Review]
-}
-```
 
 ## Inigo Setup
 
@@ -157,7 +45,7 @@ brew tap inigolabs/homebrew-tap
 brew install inigo_cli
 ```
 
-or to make sure you have the latest:
+or if already installed, upgrade to at minimum >=0.28.1:
 
 ```
 brew upgrade inigo_cli
@@ -166,14 +54,10 @@ brew upgrade inigo_cli
 ### Login to Inigo via the CLI
 
 ```shell
-inigo login google
-```
-or
-```shell
-inigo login github
+inigo login (google or github)
 ```
 
-### Setup the Inigo `Service` and `Gateway`
+### Setup the Inigo `Service`, token, and `Gateway`
 
 You must use the Inigo CLI to create a `Service` and apply a `Gateway` configuration to set up this demo.
 
