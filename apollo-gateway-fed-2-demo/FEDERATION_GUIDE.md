@@ -223,3 +223,9 @@ If, for some reason, you wish you publish your schema without running checks, th
 2. Run `inigo apply inigo/gateway.yaml --bypass-operational-check` to skip the operation check on the next apply
 3. Run `inigo apply inigo/gateway.yaml` to apply the changes for the composed schema
 4. Run `inigo publish apollo-gateway-fed-2-demo` to publish the composed schema with the breaking change
+
+## Rollback to a Previous Version of a Schema
+
+It's possible to revert the published federated schema to a prior version. This can be done as such:
+
+1. `inigo publish apollo-gateway-fed-2-demo --version 2`
