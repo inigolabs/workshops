@@ -394,7 +394,10 @@ In your Apollo Gateway logs you should have a log containing the message:
 applySchema : new schema is reported
 ```
 
-> There is currently an outstanding issue that prevents the rollback from being applied dynamically. You can restart the Gateway to apply the v1 change.
+> IMPORTANT: There is currently an outstanding issue that prevents the rollback from being applied dynamically. You can restart the Gateway to apply the v1 change until this is resolved.
+> ```shell
+> npm run start-gateway
+> ```
 
 ## Part F: Clean Up
 
