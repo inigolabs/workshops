@@ -16,14 +16,14 @@ var apolloGatewayConfig;
 // 4. If you change your local subgraph schemas, run "inigo compose" again and restart the gateway
 
 if(process.env.LOCAL_COMPOSED_SCHEMA) {
-    console.log("💻 You're using a federated schema from .env.LOCAL_COMPOSED_SCHEMA");
+    console.log("💻  You're using a federated schema from .env.LOCAL_COMPOSED_SCHEMA");
     var supergraphSdl = resolve(cwd, process.env.LOCAL_COMPOSED_SCHEMA);
     apolloGatewayConfig = {
         supergraphSdl: readFileSync(supergraphSdl, "utf-8")
     }
 }
 else {
-    console.log("⛅ You're using a federated schema pulled from Inigo's schema repository");
+    console.log("⛅  You're using a federated schema pulled from Inigo's schema repository");
     apolloGatewayConfig = {
         supergraphSdl: new InigoSchemaManager(),
         buildService(service) {
