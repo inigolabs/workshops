@@ -1,7 +1,5 @@
 # Apollo Gateway + Apollo Federation 2.x + Inigo Demo
 
-You may jump ahead [Inigo Setup](inigo-setup) if you already have this project running and already know how Apollo Gateway works.
-
 ## Apollo Gateway Demo Application Setup
 
 This demo showcases four subgraph schemas running as federated GraphQL microservices. Inigo will be added to provide anaytics and management of the federated graph.
@@ -9,6 +7,7 @@ This demo showcases four subgraph schemas running as federated GraphQL microserv
 ### Run NPM Install
 
 ```
+cd apollo-gateway-fed-2-demo
 npm install
 ```
 
@@ -57,7 +56,7 @@ brew upgrade inigo_cli
 inigo login (google or github)
 ```
 
-### Setup the Inigo `Service`, token, and `Gateway`
+### Setup the Inigo `Service` and get a  token
 
 You must use the Inigo CLI to create a `Service` and apply a `Gateway` configuration to set up this demo.
 
@@ -66,7 +65,9 @@ inigo create service apollo-gateway-fed-2-demo:dev
 inigo create token apollo-gateway-fed-2-demo:dev
 ```
 
-Keep the token handy! You will need it when deploying Apollo Gateway with Inigo.
+Copy the token. **Keep the token handy!** You will need it when deploying Apollo Gateway with Inigo.
+
+### Apply the Inigo `Gateway`
 
 ```shell
 inigo apply inigo/gateway.yaml
@@ -99,7 +100,7 @@ spec:
       - ../services/inventory/schema.graphql
 ```
 
-Now when you run `inigo get service` you should see `apollo-gateway-fed-2-demo` with its subgraph services:
+Now when you run `inigo get service` you should see `apollo-gateway-fed-2-demo:dev` with its subgraph services, but they will not yet be running:
 
 ```shell
 inigo get service
@@ -112,19 +113,23 @@ apollo-gateway-fed-2-demo  dev       0          Not Running
 - inventory                dev       0          Not Running
 ```
 
-TODO Publish Subgraph
+## Inigo Setup for Apollo Federation Local Composition
 
+### Setup the `.env` for Local Composition
 
+Copy the `.env.sample` to `.env` and add your `INIGO_SERVICE_TOKEN`. 
 
+You can leave the `LOCAL_COMPOSED_SCHEMA=supergraph.graphql` for now unless you want a different file name.
 
+## Run the Local Composition to Generate the Federated Schema
 
+```shell
+inigo compose ./inigo/gateway.yaml > supergraph.graphql
+```
 
 ### Start the Apollo Gateway
 
-### Run the Gateway with `INIGO_SERVICE_TOKEN`
-
 ```sh
-export INIGO_SERVICE_TOKEN="ey..."
 npm run start-gateway
 ```
 
@@ -132,21 +137,20 @@ npm run start-gateway
 
 Optionally, you can check the service again to see that it's `Running`.
 
-```sh
-inigo get service                       
-NAME                 LABEL      INSTANCES  STATUS
-----                 -----      ---------  ------
-apollo-gateway-demo             1          Running
-- accounts                      1          Running
-- reviews                       1          Running
-- products                      1          Running
-- inventory                     1          Running
+```sh                     
+inigo get service
+NAME                       LABEL     INSTANCES  STATUS
+----                       -----     ---------  ------
+apollo-gateway-fed-2-demo  dev       1          Not Running
+- accounts                 dev       1          Not Running
+- reviews                  dev       1          Not Running
+- products                 dev       1          Not Running
+- inventory                dev       1          Not Running
 ```
 
-Go to the Apollo Sandbox again at http://localhost:4000
+Go to the Apollo Sandbox at http://localhost:4000
 
-
-Run the `my_reviewed_products_to_buy_again` query again to hit all 4 GraphQL microservices. The data from this federated query execution will now be forwarded to Inigo!
+Run the `my_reviewed_products_to_buy_again` query. This query runs against all 4 GraphQL microservices. The data from this federated query execution will now be forwarded to Inigo!
 
 ```graphql
 query my_reviewed_products_to_buy_again {
