@@ -32,19 +32,6 @@ else {
     }
 }
 
-class CustomRemoteDataSource extends InigoRemoteDataSource {
-  async onBeforeSendRequest({ request, context }) {
-      if (context.req && context.req.headers) {
-          // pass all headers to subgraph
-          Object.keys(context.req.headers || []).forEach(key => {
-              if (context.req.headers[key]) {
-                  request.http.headers.set(key, context.req.headers[key]);
-              }
-          });
-      }
-  }
-}
-
 const inigo = new Inigo();
 const gateway = new ApolloGateway(apolloGatewayConfig);
 
@@ -59,3 +46,18 @@ const server = new ApolloServer({
 startStandaloneServer(server, {
   listen: { port: 4000 },
 }).then(({ url }) => console.log(`🚀  Supergraph ready at ${url}`));
+
+
+// Needed for Inigo
+class CustomRemoteDataSource extends InigoRemoteDataSource {
+    async onBeforeSendRequest({ request, context }) {
+        if (context.req && context.req.headers) {
+            // pass all headers to subgraph
+            Object.keys(context.req.headers || []).forEach(key => {
+                if (context.req.headers[key]) {
+                    request.http.headers.set(key, context.req.headers[key]);
+                }
+            });
+        }
+    }
+  }
