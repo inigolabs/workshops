@@ -32,8 +32,8 @@ else {
     }
 }
 
-const inigo = new Inigo();
 const gateway = new ApolloGateway(apolloGatewayConfig);
+const inigo = new Inigo();
 
 const server = new ApolloServer({
     gateway,
@@ -47,8 +47,7 @@ startStandaloneServer(server, {
   listen: { port: 4000 },
 }).then(({ url }) => console.log(`🚀  Supergraph ready at ${url}`));
 
-
-// Needed for Inigo
+// Optionally needed for headers to be propagated to the subgraphs
 class CustomRemoteDataSource extends InigoRemoteDataSource {
     async onBeforeSendRequest({ request, context }) {
         if (context.req && context.req.headers) {
