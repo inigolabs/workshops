@@ -211,6 +211,8 @@ InigoSchemaManager: new schema v1 pulled.
 ...
 ```
 
+## Part E: Introduce and Rollback a Breaking Change
+
 ### Introduce a Breaking Schema Change
 
 1. Remove `inStock: Boolean` from the `apollo-gateway-fed-2-demo/services/inventory/schema.graphql` schema file.
@@ -362,24 +364,39 @@ You can now see that schema v2 is published and that the `inStock` field was rem
 
 ![](images/schema-breaking-diff.png)
 
-In your Apollo Gateway logs you should have an output of:
+In your Apollo Gateway logs you should have a log containing the message:
 
 ```
-InigoSchemaManager: new schema v2 pulled.
+applySchema : new schema is reported
 ```
 
 Apollo Gateway is now dynamically reconfigured to use v2 of the schema.
 
-
 ![](images/broken-query.png)
 
+### Rollback a Breaking Change
 
+If a mistake was made, and you want to move back to a previous version of the schema, this can be easily accomplished with the following command:
 
+```shell
+inigo publish apollo-gateway-fed-2-demo:dev 1 --force
+```
+The expected output will be:
 
+```
+apollo-gateway-fed-2-demo % inigo publish apollo-gateway-fed-2-demo:dev 1 --force
+Schema v1 published successfully!
+```
 
+In your Apollo Gateway logs you should have a log containing the message:
 
+```
+applySchema : new schema is reported
+```
 
-## Clean Up
+> There is currently an outstanding issue that prevents the rollback from being applied dynamically. You can restart the Gateway to apply the v1 change.
+
+## Part F: Clean Up
 
 Shut down the Apollo Gateway to disconnect the agent. You must wait about 10 minutes to no longer be in a `Running` state before you can `delete`.
 
