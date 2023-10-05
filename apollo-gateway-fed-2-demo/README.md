@@ -187,6 +187,30 @@ On the Inigo UI you can see the pubish result under `Config` -> `Activity`.
 ![](images/schema-first-publish.png)
 
 
+### Reconfigure and Restart Apollo Gateway to Use Published Schema
+
+Edit the `.env` to comment out or remove `LOCAL_COMPOSED_SCHEMA=supergraph.graphql`, as we no longer want to use the locally composed schema.
+
+Run `npm run start-gateway` again and this is the expected output, with schema v1 being pulled:
+
+```
+npm run start-gateway
+
+> start-gateway
+> nodemon gateway.js
+
+[nodemon] 3.0.1
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,cjs,json
+[nodemon] starting `node gateway.js`
+⛅  You're using a federated schema pulled from Inigo's schema repository
+{"level":"info","config":{"DeploymentEnv":"","SidecarEnable":true,"ListenPort":"80","EgressURL":"","EgressAuth":{"Headers":null},"ServiceURL":"https://app.inigo.io/agent/query","StorageURL":"https://storage-service-prod-tntxobsskq-uc.a.run.app/query","LoadgenURL":"","ServiceToken":"****","GraphQLPlaygroundRoute":"","SidecarInfoRoute":"","SubscriptionProcessingEnabled":false,"ServiceSubscriptionEnabled":false,"PassThroughURL":"","PostProcess":{"QueueBuffer":5000,"WorkerCount":1},"SchemaFetch":{"IntrospectionFile":"","Source":"sdl","UploadOnIntrospection":false},"UploadMaxTries":5,"UploadChunkSize":8388608,"UploadQueueLimit":1000,"UploadCompression":"s2","WorkersNumber":10,"SidecarJWTSecret":"","JWKSEndpoint":"","ClusterAddress":"","TelemetryEnable":false,"TelemetryLevel":0,"TelemetryDebug":false,"TelemetrySampleDuration":60000000000,"TelemetrySampleInterval":300000000000,"TelemetryProfiles":"","OpenTelemetry":{"Enabled":false,"ServiceName":"Eric/apollo-gateway-fed-2-demo/dev","Endpoint":"","Insecure":false}},"time":"2023-10-05T14:23:10-07:00","caller":"./main.go:161"}
+InigoSchemaManager: new schema v1 pulled.
+🚀  Supergraph ready at http://localhost:4000/
+...
+```
+
 ### Introduce a Breaking Schema Change
 
 1. Remove `inStock: Boolean` from the `apollo-gateway-fed-2-demo/services/inventory/schema.graphql` schema file.
@@ -280,7 +304,7 @@ https://app.inigo.io/548/config/activity/2878
 error: check failed, see report above for details
 ```
 
-2. Run the apply commands to overide:
+2. Run the apply commands to override:
 ```shell
 inigo bypass apply 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
 inigo apply inigo/gateway.yaml
@@ -319,11 +343,34 @@ New config version 2 is applied 🎉
 Check out the report in the UI:
 https://app.inigo.io/548/config/activity/2879
 ```
+
 On the Inigo UI you can see that schema version 2 was applied and that the `Operational` check was bypassed.
 
-![](images/schema-version-2-breaking.png)
+![](images/schema-override-breaking-change.png)
+
+3. Run the publish command to make the new version of the schema operational:
+```shell
+inigo publish apollo-gateway-fed-2-demo:dev
+```
+The expected output of the command will be:
+```
+inigo publish apollo-gateway-fed-2-demo:dev
+Schema v2 published successfully!
+```
+
+You can now see that schema v2 is published and that the `inStock` field was removed with Inigo's schema diff view.
+
+![](images/schema-breaking-diff.png)
+
+In your Apollo Gateway logs you should have an output of:
+
+```
+InigoSchemaManager: new schema v2 pulled.
+```
 
 
+
+![](images/broken-query.png)
 
 
 
