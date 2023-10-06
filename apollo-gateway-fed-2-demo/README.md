@@ -79,7 +79,7 @@ Copy the token, which will look like `eyJhbGciOiJIUzU...`. **Keep the token hand
 ### Apply the Inigo `Gateway` and `Subgraph`s
 
 ```shell
-inigo apply inigo/gateway.yaml
+inigo apply inigo/gateway.yaml --label dev
 ```
 
 The `gateway.yaml` configuration sets up the `Gateway` and looks like this:
@@ -87,7 +87,6 @@ The `gateway.yaml` configuration sets up the `Gateway` and looks like this:
 ```yaml
 kind: Gateway
 name: apollo-gateway-fed-2-demo
-label: dev
 spec:
   composition: ApolloFederation_v2
 ```
@@ -106,10 +105,10 @@ spec:
 ```
 
 ```shell
-inigo apply services/accounts/subgraph.yaml
-inigo apply services/inventory/subgraph.yaml
-inigo apply services/products/subgraph.yaml
-inigo apply services/reviews/subgraph.yaml
+inigo apply services/accounts/subgraph.yaml --label dev
+inigo apply services/inventory/subgraph.yaml --label dev
+inigo apply services/products/subgraph.yaml --label dev
+inigo apply services/reviews/subgraph.yaml --label dev
 ```
 
 Now when you run `inigo get service` you should see `apollo-gateway-fed-2-demo:dev` with its subgraph services, but they will not yet be running:
@@ -136,7 +135,7 @@ You can leave the `LOCAL_COMPOSED_SCHEMA=supergraph.graphql` for now unless you 
 ## Run the Local Composition to Generate the Federated Schema
 
 ```shell
-inigo compose inigo/gateway.yaml > supergraph.graphql
+inigo compose inigo/local.compose.yaml > supergraph.graphql
 ```
 
 ### Start the Apollo Gateway
@@ -225,7 +224,7 @@ InigoSchemaManager: new schema v1 pulled.
 1. Remove `inStock: Boolean` from the `apollo-gateway-fed-2-demo/services/inventory/schema.graphql` schema file.
 2. Run the check command:
 ```shell
-inigo check services/inventory/subgraph.yaml
+inigo check services/inventory/subgraph.yaml --label dev
 ```
 The expected output will be:
 ```
@@ -274,11 +273,11 @@ If you are confident that your breaking change will not impact your clients and 
 
 1. Run the apply command for the gateway:
 ```shell
-inigo apply services/inventory/subgraph.yaml
+inigo apply services/inventory/subgraph.yaml --label dev
 ```
 The expected output of the command will be:
 ```
-apollo-gateway-fed-2-demo % inigo apply services/inventory/subgraph.yaml
+apollo-gateway-fed-2-demo % inigo apply services/inventory/subgraph.yaml --label dev
 Service: apollo-gateway-fed-2-demo:dev
 
 Changelog:
@@ -316,12 +315,12 @@ error: check failed, see report above for details
 2. Run the apply commands to override:
 ```shell
 inigo bypass apply 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
-inigo apply services/inventory/subgraph.yaml
+inigo apply services/inventory/subgraph.yaml --label dev
 ```
 The expected output of the commands will be:
 ```
 inigo bypass apply 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
-inigo apply services/inventory/subgraph.yaml
+inigo apply services/inventory/subgraph.yaml --label dev
 Feel free to re-run 'apply' of the same config again!
 Service: apollo-gateway-fed-2-demo:dev
 
