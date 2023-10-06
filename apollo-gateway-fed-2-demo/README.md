@@ -225,11 +225,11 @@ InigoSchemaManager: new schema v1 pulled.
 1. Remove `inStock: Boolean` from the `apollo-gateway-fed-2-demo/services/inventory/schema.graphql` schema file.
 2. Run the check command:
 ```shell
-inigo check inigo/gateway.yaml
+inigo check services/inventory/subgraph.yaml
 ```
 The expected output will be:
 ```
-apollo-gateway-fed-2-demo % inigo check inigo/gateway.yaml
+apollo-gateway-fed-2-demo % inigo check services/inventory/subgraph.yaml
 Service: apollo-gateway-fed-2-demo:dev
 
 Changelog:
@@ -259,7 +259,7 @@ Execute the below command to ignore this failure on the next run:
 >  inigo bypass check 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
 
 Check out the report in the UI:
-https://app.inigo.io/548/config/activity/2876
+https://app.inigo.io/000/config/activity/2876
 
 error: check failed, see report above for details
 ```
@@ -274,11 +274,11 @@ If you are confident that your breaking change will not impact your clients and 
 
 1. Run the apply command for the gateway:
 ```shell
-inigo apply inigo/gateway.yaml
+inigo apply services/inventory/subgraph.yaml
 ```
 The expected output of the command will be:
 ```
-apollo-gateway-fed-2-demo % inigo apply inigo/gateway.yaml
+apollo-gateway-fed-2-demo % inigo apply services/inventory/subgraph.yaml
 Service: apollo-gateway-fed-2-demo:dev
 
 Changelog:
@@ -308,7 +308,7 @@ Execute the below command to ignore this failure on the next run:
 >  inigo bypass apply 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
 
 Check out the report in the UI:
-https://app.inigo.io/548/config/activity/2878
+https://app.inigo.io/000/config/activity/2878
 
 error: check failed, see report above for details
 ```
@@ -316,12 +316,12 @@ error: check failed, see report above for details
 2. Run the apply commands to override:
 ```shell
 inigo bypass apply 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
-inigo apply inigo/gateway.yaml
+inigo apply services/inventory/subgraph.yaml
 ```
 The expected output of the commands will be:
 ```
 inigo bypass apply 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
-inigo apply inigo/gateway.yaml
+inigo apply services/inventory/subgraph.yaml
 Feel free to re-run 'apply' of the same config again!
 Service: apollo-gateway-fed-2-demo:dev
 
@@ -350,7 +350,7 @@ BREAKING: Field Product.inStock was removed.
 New config version 2 is applied 🎉
 
 Check out the report in the UI:
-https://app.inigo.io/548/config/activity/2879
+https://app.inigo.io/000/config/activity/2879
 ```
 
 On the Inigo UI you can see that schema version 2 was applied and that the `Operational` check was bypassed.
