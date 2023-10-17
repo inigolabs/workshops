@@ -1,0 +1,22 @@
+sandbox:
+  enabled: true
+supergraph:
+  introspection: true
+  listen: 0.0.0.0:4000
+homepage:
+  enabled: false
+include_subgraph_errors:
+  all: true
+headers:
+  all:
+    request:
+      - propagate:
+          matching: .*
+cors:
+  allow_any_origin: true
+  origins: []
+plugins:
+  inigo.middleware:
+    enabled: true
+    service: "https://app.inigo.io/agent/query"
+    token: "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjowLCJpYXQiOjE2OTYxMDA0MDksInN1YiI6ImFwb2xsby1yb3V0ZXItZmVkLTEtZGVtbyJ9LCJ0b2tlblR5cGUiOiJzZXJ2aWNlX3Rva2VuIiwidXNlcl9wcm9maWxlIjoic2lkZWNhciIsInVzZXJfcm9sZXMiOlsic2lkZWNhciJdLCJ1c2VyX2lkIjo1MjAsInVzZXJfbmFtZSI6IkVyaWMvYXBvbGxvLXJvdXRlci1mZWQtMS1kZW1vIiwib3JnX2lkIjoxMzUsInRva2VuIjoiNDJjNzVkNDktMWJiNi00YWFkLWFjMGUtMWZmYmI1MTc3Nzg2IiwiZW5jcnlwdGlvbl9rZXkiOiI3VUtJdEwvTVMvRCtpcHhlcGs0MUlXS0JtNDhKcUxBVnF4alEySHg5NFlnPSJ9.BBIZxx1wW90kP3wDhTqKXjuQ2SgXH-cFAcZde45qGSNetbfWdHQdFp_tdnv4UxCkiiD-JDdW5cqruLUEGoReFw"

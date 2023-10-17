@@ -1,0 +1,20 @@
+{
+  "name": "federation-demo",
+  "scripts": {
+    "start-service-accounts": "nodemon services/accounts/index.js",
+    "start-service-reviews": "nodemon services/reviews/index.js",
+    "start-service-products": "nodemon services/products/index.js",
+    "start-service-inventory": "nodemon services/inventory/index.js",
+    "start-services": "concurrently \"npm:start-service-*\"",
+    "install:accounts": "cd services/accounts && npm install",
+    "install:inventory": "cd services/inventory && npm install",
+    "install:products": "cd services/products && npm install",
+    "install:reviews": "cd services/reviews && npm install",
+    "postinstall": "run-p install:*"
+  },
+  "devDependencies": {
+    "concurrently": "latest",
+    "nodemon": "latest",
+    "npm-run-all": "latest"
+  }
+}

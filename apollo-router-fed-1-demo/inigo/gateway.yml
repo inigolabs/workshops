@@ -1,0 +1,21 @@
+kind: Gateway
+name: apollo-router-fed-1-demo
+spec:
+  composition: ApolloFederation_v1
+  services:
+    - name: accounts
+      url: "http://host.docker.internal:4001/graphql"
+      schema_files:
+      - ../services/accounts/schema.graphql
+    - name: reviews
+      url: "http://host.docker.internal:4002/graphql"
+      schema_files:
+      - ../services/reviews/schema.graphql
+    - name: products
+      url: "http://host.docker.internal:4003/graphql"
+      schema_files:
+      - ../services/products/schema.graphql
+    - name: inventory
+      url: "http://host.docker.internal:4004/graphql"
+      schema_files:
+      - ../services/inventory/schema.graphql
