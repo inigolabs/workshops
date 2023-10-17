@@ -176,7 +176,7 @@ docker run --rm  \
 docker run --rm  \
 -v ${PWD}/router.yaml:/dist/config/router.yaml \
 -e INIGO_REGISTRY_ENABLED=true \
--e INIGO_SERVICE_TOKEN="eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjowLCJpYXQiOjE2OTYzNjQzNzcsInN1YiI6ImFwb2xsby1yb3V0ZXItZmVkLTEtZGVtbyJ9LCJ0b2tlblR5cGUiOiJzZXJ2aWNlX3Rva2VuIiwidXNlcl9wcm9maWxlIjoic2lkZWNhciIsInVzZXJfcm9sZXMiOlsic2lkZWNhciJdLCJ1c2VyX2lkIjo1MjAsInVzZXJfbmFtZSI6IkVyaWMvYXBvbGxvLXJvdXRlci1mZWQtMS1kZW1vIiwib3JnX2lkIjoxMzUsInRva2VuIjoiNmMzZWI3MjMtYWE1ZS00NDI4LTk2ODctMmUyYjE1ZDZhOWM5IiwiZW5jcnlwdGlvbl9rZXkiOiI3VUtJdEwvTVMvRCtpcHhlcGs0MUlXS0JtNDhKcUxBVnF4alEySHg5NFlnPSJ9.Z4UiifczsVlszzviUEuJ6ulK2cHsijAJ1tpcSK56_AYXqoLmlUe7DvcKhZWCtMzA3sV3HnkGjL8Rlzx8y4QS7Q" \
+-e INIGO_SERVICE_TOKEN="ey" \
 -e INIGO_SERVICE_URL=https://app.inigo.io/agent/query \
 --name router inigohub/inigo_apollo_router
 
@@ -184,7 +184,7 @@ docker run --rm  \
 
 docker run --rm  \
 -e INIGO_REGISTRY_ENABLED=true \
--e INIGO_SERVICE_TOKEN="eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjowLCJpYXQiOjE2OTYxMDA0MDksInN1YiI6ImFwb2xsby1yb3V0ZXItZmVkLTEtZGVtbyJ9LCJ0b2tlblR5cGUiOiJzZXJ2aWNlX3Rva2VuIiwidXNlcl9wcm9maWxlIjoic2lkZWNhciIsInVzZXJfcm9sZXMiOlsic2lkZWNhciJdLCJ1c2VyX2lkIjo1MjAsInVzZXJfbmFtZSI6IkVyaWMvYXBvbGxvLXJvdXRlci1mZWQtMS1kZW1vIiwib3JnX2lkIjoxMzUsInRva2VuIjoiNDJjNzVkNDktMWJiNi00YWFkLWFjMGUtMWZmYmI1MTc3Nzg2IiwiZW5jcnlwdGlvbl9rZXkiOiI3VUtJdEwvTVMvRCtpcHhlcGs0MUlXS0JtNDhKcUxBVnF4alEySHg5NFlnPSJ9.BBIZxx1wW90kP3wDhTqKXjuQ2SgXH-cFAcZde45qGSNetbfWdHQdFp_tdnv4UxCkiiD-JDdW5cqruLUEGoReFw" \
+-e INIGO_SERVICE_TOKEN="ey" \
 -e INIGO_SERVICE_URL=https://app.inigo.io/agent/query \
 --name router inigohub/inigo_apollo_router
 
@@ -200,7 +200,7 @@ docker run --rm -p 4000:4000 \
 -e APOLLO_ROUTER_CONFIG_PATH=/dist/config/router.yaml \
 -e APOLLO_ROUTER_LOG=debug \
 -e INIGO_REGISTRY_ENABLED=true \
--e INIGO_SERVICE_TOKEN="eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjowLCJpYXQiOjE2OTYxMDA0MDksInN1YiI6ImFwb2xsby1yb3V0ZXItZmVkLTEtZGVtbyJ9LCJ0b2tlblR5cGUiOiJzZXJ2aWNlX3Rva2VuIiwidXNlcl9wcm9maWxlIjoic2lkZWNhciIsInVzZXJfcm9sZXMiOlsic2lkZWNhciJdLCJ1c2VyX2lkIjo1MjAsInVzZXJfbmFtZSI6IkVyaWMvYXBvbGxvLXJvdXRlci1mZWQtMS1kZW1vIiwib3JnX2lkIjoxMzUsInRva2VuIjoiNDJjNzVkNDktMWJiNi00YWFkLWFjMGUtMWZmYmI1MTc3Nzg2IiwiZW5jcnlwdGlvbl9rZXkiOiI3VUtJdEwvTVMvRCtpcHhlcGs0MUlXS0JtNDhKcUxBVnF4alEySHg5NFlnPSJ9.BBIZxx1wW90kP3wDhTqKXjuQ2SgXH-cFAcZde45qGSNetbfWdHQdFp_tdnv4UxCkiiD-JDdW5cqruLUEGoReFw" \
+-e INIGO_SERVICE_TOKEN="ey" \
 -e INIGO_SERVICE_URL=https://app.inigo.io/agent/query \
 --name router inigohub/inigo_apollo_router
 
