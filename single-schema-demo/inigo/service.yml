@@ -1,0 +1,6 @@
+kind: Service
+name: single-schema-demo
+spec:
+  registry:
+  schema_files: 
+  - ../graphql/schema.graphql
