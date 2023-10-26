@@ -96,7 +96,7 @@ The subgraphs can optionally be broken out into their `Subgraph` definitions. Fo
 
 ```yaml
 kind: Subgraph
-name: apollo-gateway-fed-2-demo
+name: accounts
 spec: 
   gateway: apollo-gateway-fed-2-demo
   url: "http://localhost:4001/graphql"
@@ -104,10 +104,21 @@ spec:
   - ./schema.graphql
 ```
 
+Using the `inigo` CLI, you can apply the `Subgraph` YAML configurations. Run each command individually (to give a few seconds for each to be fully applied) as such:
+
+```shell
+inigo apply services/products/subgraph.yaml --label dev
+```
+
 ```shell
 inigo apply services/accounts/subgraph.yaml --label dev
+```
+
+```shell
 inigo apply services/inventory/subgraph.yaml --label dev
-inigo apply services/products/subgraph.yaml --label dev
+```
+
+```shell
 inigo apply services/reviews/subgraph.yaml --label dev
 ```
 
