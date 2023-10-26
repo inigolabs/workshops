@@ -1,0 +1,7 @@
+kind: Checks
+name: apollo-gateway-fed-2-demo
+spec:
+  steps:
+    operational:
+      fail_on: error
+      time_range: 14d
