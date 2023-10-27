@@ -25,7 +25,6 @@ npm install inigo-linux-arm64
 npm install inigo-darwin-amd64
 npm install inigo-darwin-arm64
 npm install inigo-windows-amd64
-npm install inigo-darwin-arm64
 ```
 
 ### Run Demo GraphQL Subgraph Microservices
@@ -170,7 +169,6 @@ query my_reviewed_products_to_buy_again_local {
         name
         price
         shippingEstimate
-        inStock
       }
       review: body
     }
