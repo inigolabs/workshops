@@ -20,8 +20,14 @@ if(process.env.LOCAL_COMPOSED_SCHEMA) {
     var supergraphSdl = resolve(cwd, process.env.LOCAL_COMPOSED_SCHEMA);
     supergraphSchemaConfig = readFileSync(supergraphSdl, "utf-8");
 }
+else if(process.env.INIGO_REGISTRY_URL) {
+    console.log("⛅  You're using a federated schema pulled from your private schema registry");
+    supergraphSchemaConfig = new InigoSchemaManager({
+        endpoint: process.env.INIGO_REGISTRY_URL
+    })
+}
 else {
-    console.log("⛅  You're using a federated schema pulled from Inigo's schema repository");
+    console.log("⛅  You're using a federated schema pulled from Inigo's schema registry");
     supergraphSchemaConfig = new InigoSchemaManager()
 }
 
