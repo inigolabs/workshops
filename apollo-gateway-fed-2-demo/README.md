@@ -142,7 +142,7 @@ Copy the `.env.sample` to `.env` and add your `INIGO_SERVICE_TOKEN`.
 
 You can leave the `LOCAL_COMPOSED_SCHEMA=supergraph.graphql` for now unless you want a different file name.
 
-## Run the Local Composition to Generate the Federated Schema
+### Run the Local Composition to Generate the Federated Schema
 
 ```shell
 inigo compose inigo/local.compose.yaml > supergraph.graphql
