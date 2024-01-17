@@ -4,7 +4,7 @@ The official Inigo Ruby on Rails documentation can be found at https://docs.inig
 
 ## Setup and Run with Inigo
 
-This demo application already has the code changes included from the official documentation. The version of Ruby used in the demo is 3.2.2, and the minimium version is 3.1.
+This demo application already has the code changes included from the official documentation. The version of Ruby used in the demo is 3.2.2, and the minimium version is 3.1.2.
 
 ### Create the Inigo Service and Set the `INIGO_SERVICE_TOKEN`
 
