@@ -34,6 +34,8 @@ query users {
 }
 ```
 
+Run the query multiple times. Please wait a few moments for the data to be populated in https://app.inigo.io under **Observe**. You can click the Refresh button to get the latest data.
+
 ## FYI: Ruby on Rails GraphQL Setup Information (Not Needed to Run Demo)
 
 The following secions contain pertinent information for setting up a Rails application with Ruby GraphQL, and is here for informational purposes only.
