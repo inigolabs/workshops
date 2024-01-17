@@ -1,32 +1,26 @@
 # Inigo Ruby on Rails Demo
 
-The official Inigo Ruby on Rails documentation can be found at https://docs.inigo.io/deployment/ruby_on_rails
+The official Inigo Ruby on Rails documentation can be found at https://docs.inigo.io/product/agent_installation/ruby_on_rails
 
 ## Setup and Run with Inigo
 
-This demo application already has the code changes included from the official documentation.
+This demo application already has the code changes included from the official documentation. The version of Ruby used in the demo is 3.2.2, and the minimium version is 3.1.
+
+### Create the Inigo Service and Set the `INIGO_SERVICE_TOKEN`
+
+```shell
+inigo create service rails-demo
+inigo create token rails-demo
+export INIGO_SERVICE_TOKEN="ey..."
+```
+
+> Keep the Inigo token handy for configuring the Inigo Middleware.
 
 ### Build and Run the Demo Application
 
 ```shell
 bundle install
 bin/rails db:migrate
-bin/rails server
-```
-
-### Create the Inigo Service
-
-```shell
-inigo create service rails-demo
-inigo create token rails-demo
-```
-
-> Keep the Inigo token handy for configuring the Inigo Middleware.
-
-### Run the Rails demo with Inigo Middleware
-
-```shell
-export INIGO_SERVICE_TOKEN="ey..."
 bin/rails server
 ```
 
@@ -48,7 +42,7 @@ The following secions contain pertinent information for setting up a Rails appli
 
 This guide assumes that you have macOS and need to install/upgrade Ruby and Rails.
 
-#### Install Ruby 3.1 or Greater (Needed by Inigo)
+#### Install Ruby 3.1.2 or Greater (Needed by Inigo)
 
 ```shell
 ruby --version

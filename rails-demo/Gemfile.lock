@@ -100,9 +100,11 @@ GEM
     importmap-rails (1.2.1)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
-    inigorb (0.27.4)
+    inigorb (0.29.2)
       ffi (~> 1.15.5, >= 1.15.5)
+      graphql (~> 2.0.24, >= 2.0.24)
       jwt (~> 2.7.1, >= 2.7.1)
+      puma (~> 5.0, >= 5.0)
     io-console (0.6.0)
     irb (1.7.4)
       reline (>= 0.3.6)
@@ -229,7 +231,7 @@ DEPENDENCIES
   graphiql-rails
   graphql (~> 2.0)
   importmap-rails
-  inigorb
+  inigorb (~> 0.29)
   jbuilder
   puma (~> 5.0)
   rails (~> 7.0.6)
@@ -243,7 +245,7 @@ DEPENDENCIES
   webdrivers
 
 RUBY VERSION
-   ruby 3.1.4p223
+   ruby 3.2.2p53
 
 BUNDLED WITH
-   2.1.4
+   2.5.4
