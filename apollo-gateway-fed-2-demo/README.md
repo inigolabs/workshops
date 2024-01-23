@@ -197,7 +197,7 @@ apollo-gateway-fed-2-demo % inigo publish apollo-gateway-fed-2-demo:dev
 Schema v1 published successfully!
 ```
 
-On the Inigo UI you can see the pubish result under `Config` -> `Activity`.
+On the Inigo UI you can see the pubish result under `Activity`.
 
 ![](images/schema-first-publish.png)
 
@@ -272,7 +272,7 @@ https://app.inigo.io/000/config/activity/2876
 error: check failed, see report above for details
 ```
 
-On the Inigo UI you can see the breaking change result under `Config` -> `Activity`.
+On the Inigo UI you can see the breaking change result under `Activity`.
 
 ![](images/schema-breaking-change.png)
 
