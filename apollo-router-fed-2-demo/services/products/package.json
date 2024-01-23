@@ -1,0 +1,12 @@
+{
+  "name": "products",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@apollo/subgraph": "latest",
+    "@apollo/server": "latest",
+    "graphql": "latest",
+    "graphql-tag": "latest"
+  }
+}

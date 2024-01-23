@@ -1,0 +1,5 @@
+kind: Service
+name: apollo-router-fed-2-demo
+label: dev
+spec:
+  registry: my-registry

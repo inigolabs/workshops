@@ -1,0 +1,4 @@
+kind: Gateway
+name: apollo-router-fed-2-demo
+spec:
+  composition: ApolloFederation_v2

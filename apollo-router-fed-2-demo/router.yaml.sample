@@ -1,0 +1,22 @@
+supergraph:
+  introspection: true
+  listen: 0.0.0.0:8080
+health_check:
+  listen: 0.0.0.0:8088
+homepage:
+  enabled: false
+sandbox:
+  enabled: false
+include_subgraph_errors:
+  all: true
+headers:
+  all:
+    request:
+      - propagate:
+          matching: .*
+cors:
+  allow_any_origin: true
+  origins: []
+plugins:
+  inigo.middleware:
+    token: "ADD_TOKEN_HERE"

@@ -1,0 +1,7 @@
+kind: Subgraph
+name: accounts
+spec: 
+  gateway: apollo-router-fed-2-demo
+  url: "http://host.docker.internal:4001/graphql"
+  schema_files:
+  - ./schema.graphql

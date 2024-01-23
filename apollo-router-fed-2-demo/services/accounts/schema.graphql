@@ -1,0 +1,19 @@
+directive @lint(
+    ignore: [String!]
+    except: [String!]
+) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0",
+        import: ["@key", "@shareable"])
+
+extend type Query {
+    me: User
+}
+
+type User @key(fields: "id") {
+    id: ID!
+    name: String
+    LAST: String @lint(ignore: ["FIELD_NAMES_CAMEL_CASE"])
+    username: String @shareable
+}
