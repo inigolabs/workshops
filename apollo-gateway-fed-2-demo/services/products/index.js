@@ -1,16 +1,26 @@
 const { ApolloServer } = require('@apollo/server');
 const { startStandaloneServer } = require('@apollo/server/standalone');
 const { buildSubgraphSchema } = require('@apollo/subgraph');
+const { GraphQLError } = require('graphql');
 const { readFileSync } = require("fs");
 const { resolve } = require("path");
 const { parse } = require('graphql');
 
 var cwd = resolve(__dirname, ".");
 var typeDefs = parse(readFileSync(resolve(cwd, "schema.graphql"), "utf-8"));
+var count = 0;
 
 const resolvers = {
   Product: {
     __resolveReference(object) {
+      count++
+      if(count % 7 == 0) {
+        throw new GraphQLError('Darn! Something went very wrong!');
+      }
+      else if (count % 5 == 0) {
+        var waitTill = new Date(new Date().getTime() + 1000);
+        while(waitTill > new Date()){}
+      }
       return products.find(product => product.upc === object.upc);
     }
   },
