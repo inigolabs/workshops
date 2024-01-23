@@ -2,7 +2,7 @@
 
 This demo application showcases four subgraph schemas running as federated GraphQL microservices. Inigo will be added to provide analytics and management of the federated graph.
 
-This guide will walk through the step-by-step of how to configure and run Apollo Federation 2.0 with Inigo and Apollo Router, and covers how to do local composition and pushing to Inigo's schema registry. in this scenario, a breaking change will be introduced, forcefully published, and then rolled back.
+This guide will walk through the step-by-step of how to configure and run Apollo Federation 2.0 with Inigo and Apollo Router, and covers how to do local composition and pushing to Inigo's schema registry. In this scenario, a breaking change will be introduced, forcefully published, and then rolled back.
 
 ## Part A: Apollo Router Demo Application Setup
 
@@ -23,9 +23,9 @@ This command will run all of the GraphQL Subgraph microservices at once:
 npm run start-services
 ```
 
-They will be running at http://localhost:4001, http://localhost:4002, http://localhost:4003, and http://localhost:4004.
+The subgraph services will be running at http://localhost:4001, http://localhost:4002, http://localhost:4003, and http://localhost:4004.
 
-## Part B: Inigo Setup
+## Part B: Inigo CLI and Service Setup
 
 Open a new terminal (to keep the GraphQL subgraph services running) and `cd` back into this project directory.
 
@@ -57,23 +57,27 @@ inigo login (google or github)
 You can use the Inigo CLI to create a `Service` and apply a `Gateway` configuration to set up this demo. This could also be done through the UI.
 
 ```shell
-inigo create service apollo-router-fed-2-demo:dev
-inigo create token apollo-router-fed-2-demo:dev
+inigo create service apollo-router-fed-2-demo:local
+inigo create token apollo-router-fed-2-demo:local
 ```
 
 Copy the token, which will look like `eyJhbGciOiJIUzU...`. **Keep the token handy!** You will need it when deploying Apollo Router with Inigo.
 
+### Setup `router.yaml` Configuration for Apollo Router
+
+Create a `router.yaml` from the `router.yaml.sample` template. Add your Inigo service token to replace the `ADD_TOKEN_HERE` value.
+
 ### Apply the Inigo `Gateway` and `Subgraph`s
 
 ```shell
-inigo apply inigo/gateway.yaml --label dev
+inigo apply inigo/gateway.yaml --label local
 ```
 
 The `gateway.yaml` configuration sets up the `Gateway` and looks like this:
 
 ```yaml
 kind: Gateway
-name: apollo-gateway-fed-2-demo
+name: apollo-router-fed-2-demo
 spec:
   composition: ApolloFederation_v2
 ```
@@ -85,7 +89,7 @@ The subgraphs can optionally be broken out into their `Subgraph` definitions. Fo
 kind: Subgraph
 name: accounts
 spec: 
-  gateway: apollo-gateway-fed-2-demo
+  gateway: apollo-router-fed-2-demo
   url: "http://host.docker.internal:4001/graphql"
   schema_files:
   - ./schema.graphql
@@ -96,32 +100,32 @@ spec:
 Using the `inigo` CLI, you can apply the `Subgraph` YAML configurations. Run each command individually (to give a few seconds for each to be fully applied) as such:
 
 ```shell
-inigo apply services/products/subgraph.yaml --label dev
+inigo apply services/products/subgraph.yaml --label local
 ```
 
 ```shell
-inigo apply services/accounts/subgraph.yaml --label dev
+inigo apply services/accounts/subgraph.yaml --label local
 ```
 
 ```shell
-inigo apply services/inventory/subgraph.yaml --label dev
+inigo apply services/inventory/subgraph.yaml --label local
 ```
 
 ```shell
-inigo apply services/reviews/subgraph.yaml --label dev
+inigo apply services/reviews/subgraph.yaml --label local
 ```
 
-Now when you run `inigo get service` you should see `apollo-gateway-fed-2-demo:dev` with its subgraph services, but they will not yet be running:
+Now when you run `inigo get service` you should see `apollo-router-fed-2-demo:local` with its subgraph services, but they will not yet be running:
 
 ```shell
 inigo get service
-NAME                      LABEL  INSTANCES  STATUS
-----                      -----  ---------  ------
-apollo-router-fed-2-demo  dev    0          Not Running
-- products                dev               
-- accounts                dev               
-- inventory               dev               
-- reviews                 dev               
+NAME                      LABEL    INSTANCES  STATUS
+----                      -----    ---------  ------
+apollo-router-fed-2-demo  local    0          Not Running
+- products                local               
+- accounts                local               
+- inventory               local               
+- reviews                 local               
 ```
 
 ## Part C: Inigo Setup for Apollo Federation Local Composition
@@ -131,10 +135,6 @@ apollo-router-fed-2-demo  dev    0          Not Running
 ```shell
 inigo compose inigo/local.compose.yaml > supergraph.graphql
 ```
-
-### Setup `router.yaml` Configuration
-
-Create a `router.yaml` from the `router.yaml.sample` template. Add your Inigo service token to replace the `ADD_TOKEN_HERE` value.
 
 ### Start the Apollo Router
 
@@ -148,9 +148,9 @@ docker run --rm -p 4000:8080  \
 --name router-local inigohub/inigo_apollo_router:latest
 ```
 
-> Note: You will see logging statements coming from the Inigo sidecar while running the Apollo Gateway. You can ignore these logs unless some problem occurs.
+> **Note:** You will see logging statements coming from the Inigo sidecar while running the Apollo Gateway. You can ignore these logs unless some problem occurs.
 
-Go to Inigo Explorer and configure it to call http://localhost:4000.
+Go to Inigo Explorer (https://app.inigo.io and go to your Service -> Explorer) and configure it to call http://localhost:4000. You may use any GraphQL client, however.
 
 Run the `my_reviewed_products_to_buy_again_local` query. This query runs against all 4 GraphQL microservices.
 
@@ -172,6 +172,8 @@ query my_reviewed_products_to_buy_again_local {
 ```
 
 After you run the query several times and then go to Inigo Analytics, you will be able to see analytics data for `my_reviewed_products_to_buy_again_local`.
+
+> **Note:** Errors and delays are randomly generated from the Products subgraph, and are to be expected for demonstration purposes.
 
 ![](images/local-query-analytics.png)
 
@@ -200,12 +202,12 @@ docker run --rm -p 4000:8080  \
 1. Remove `inStock: Boolean` from the `apollo-gateway-fed-2-demo/services/inventory/schema.graphql` schema file.
 2. Run the check command:
 ```shell
-inigo check services/inventory/subgraph.yaml --label dev
+inigo check services/inventory/subgraph.yaml --label local
 ```
 The expected output will be:
 ```
 apollo-router-fed-2-demo % inigo check services/inventory/subgraph.yaml
-Service: apollo-router-fed-2-demo:dev
+Service: apollo-router-fed-2-demo:local
 
 Changelog:
 ----------
@@ -249,12 +251,12 @@ If you are confident that your breaking change will not impact your clients and 
 
 1. Run the apply command for the gateway:
 ```shell
-inigo apply services/inventory/subgraph.yaml --label dev
+inigo apply services/inventory/subgraph.yaml --label local
 ```
 The expected output of the command will be:
 ```
-apollo-router-fed-2-demo % inigo apply services/inventory/subgraph.yaml --label dev
-Service: apollo-router-fed-2-demo:dev
+apollo-router-fed-2-demo % inigo apply services/inventory/subgraph.yaml --label local
+Service: apollo-router-fed-2-demo:local
 
 Changelog:
 ----------
@@ -291,14 +293,14 @@ error: check failed, see report above for details
 2. Run the apply commands to override:
 ```shell
 inigo bypass apply 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
-inigo apply services/inventory/subgraph.yaml --label dev
+inigo apply services/inventory/subgraph.yaml --label local
 ```
 The expected output of the commands will be:
 ```
 inigo bypass apply 1a8e3e373fb394bc128656dd8c37a9836b84c5c2
-inigo apply services/inventory/subgraph.yaml --label dev
+inigo apply services/inventory/subgraph.yaml --label local
 Feel free to re-run 'apply' of the same config again!
-Service: apollo-router-fed-2-demo:dev
+Service: apollo-router-fed-2-demo:local
 
 Changelog:
 ----------
@@ -334,11 +336,11 @@ On the Inigo UI you can see that schema version 2 was applied and that the `Oper
 
 3. Run the publish command to make the new version of the schema operational:
 ```shell
-inigo publish apollo-router-fed-2-demo:dev
+inigo publish apollo-router-fed-2-demo:local
 ```
 The expected output of the command will be:
 ```
-inigo publish apollo-router-fed-2-demo:dev
+inigo publish apollo-router-fed-2-demo:local
 Schema v2 published successfully!
 ```
 
@@ -361,12 +363,12 @@ Apollo Router is now dynamically reconfigured to use v2 of the schema. This can 
 If a mistake was made, and you want to move back to a previous version of the schema, this can be easily accomplished with the following command:
 
 ```shell
-inigo publish apollo-router-fed-2-demo:dev 1 --force
+inigo publish apollo-router-fed-2-demo:local 1 --force
 ```
 The expected output will be:
 
 ```
-apollo-router-fed-2-demo % inigo publish apollo-router-fed-2-demo:dev 1 --force
+apollo-router-fed-2-demo % inigo publish apollo-router-fed-2-demo:local 1 --force
 Schema v1 published successfully!
 ```
 
@@ -386,9 +388,9 @@ applySchema : new schema is reported
 Shut down the Apollo Gateway to disconnect the agent. You must wait about 10 minutes to no longer be in a `Running` state before you can `delete`.
 
 ```shell
-inigo delete service apollo-router-fed-2-demo:dev
-inigo delete service accounts:dev
-inigo delete service reviews:dev
-inigo delete service products:dev
-inigo delete service inventory:dev
+inigo delete service apollo-router-fed-2-demo:local
+inigo delete service accounts:local
+inigo delete service reviews:local
+inigo delete service products:local
+inigo delete service inventory:local
 ```
