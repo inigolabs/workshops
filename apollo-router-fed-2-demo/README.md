@@ -378,19 +378,10 @@ In your Apollo Gateway logs you should have a log containing the message:
 applySchema : new schema is reported
 ```
 
-> IMPORTANT: There is currently an outstanding issue that prevents the rollback from being applied dynamically. You can restart the Gateway to apply the v1 change until this is resolved.
-> ```shell
-> npm run start-gateway
-> ```
-
 ## Part F: Clean Up
 
 Shut down the Apollo Gateway to disconnect the agent. You must wait about 10 minutes to no longer be in a `Running` state before you can `delete`.
 
 ```shell
 inigo delete service apollo-router-fed-2-demo:local
-inigo delete service accounts:local
-inigo delete service reviews:local
-inigo delete service products:local
-inigo delete service inventory:local
 ```
