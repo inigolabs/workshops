@@ -29,6 +29,12 @@ inigo apply services/inventory/subgraph.yaml --label local
 inigo apply services/reviews/subgraph.yaml --label local
 ```
 
+Set up the `Checks` for linting in advance.
+
+```sh
+inigo apply inigo/checks.yaml --label local
+```
+
 ## Before the Demo
 
 1. Be able to easily switch between VS Code and the Web Browser
@@ -44,6 +50,7 @@ inigo apply services/reviews/subgraph.yaml --label local
 7. Revert `services/accounts/subgraph.yaml`
 8. Clear the terminals
 9. Make sure Docker is running
+10. Set Analytics to the past 5 mins
 
 ## Begin Demo
 
