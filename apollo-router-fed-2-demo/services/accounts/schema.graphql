@@ -14,6 +14,5 @@ extend type Query {
 type User @key(fields: "id") {
     id: ID!
     name: String
-    LAST: String @lint(ignore: ["FIELD_NAMES_CAMEL_CASE"])
     username: String @shareable
 }
