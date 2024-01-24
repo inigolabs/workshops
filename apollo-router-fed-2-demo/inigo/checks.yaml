@@ -2,9 +2,6 @@ kind: Checks
 name: apollo-router-fed-2-demo
 spec:
   steps:
-    # operational:
-    #   fail_on: error
-    #   time_range: 14d
     linting:
       fail_on: error
       disable: false
