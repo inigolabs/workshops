@@ -13,14 +13,6 @@ var myId = 0;
 
 const resolvers = {
   Query: {
-    login(id, password) {
-      if(id > users.length-1) {
-        throw new GraphQLError('Invalid login!');
-      }
-
-      myId = id;
-      return users[id];
-    },
     me() {
       return users[myId];
     }

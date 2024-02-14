@@ -3,7 +3,7 @@ extend schema
        import: ["@key", "@shareable"])
 
 extend type Query {
-    topProducts(first: Int = 5): [Product] @access(role: ["acme_guest", "acme_member"])
+    topProducts(first: Int = 5): [Product] @access(role: ["acme_guest", "acme_member", "acme_employee", "acme_manager"])
     allProducts: [Product] @access(role: ["acme_employee", "acme_manager"])
 }
 

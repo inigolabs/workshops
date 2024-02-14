@@ -3,7 +3,7 @@ extend schema
         import: ["@key", "@shareable"])
 
 extend type Query {
-    me: User @access(role: ["acme_member"])
+    me: User @access(role: ["acme_member", "acme_employee", "acme_manager"])
     login(id: Int, password: String): User @ratelimit(allowance: 3, period: "1m") @access(role: ["acme_guest", "acme_member"])
 }
 
