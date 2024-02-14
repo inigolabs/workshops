@@ -1,8 +1,0 @@
-query Planets {
-    planets {
-        name
-        appearedIn {
-            title
-        }
-    }
-}

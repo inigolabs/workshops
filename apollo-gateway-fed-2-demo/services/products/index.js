@@ -27,9 +27,7 @@ const resolvers = {
   Query: {
     topProducts(_, args) {
       return products.slice(0, args.first);
-    }
-  },
-  Query: {
+    },
     allProducts(_) {
       return products;
     }

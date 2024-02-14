@@ -11,10 +11,6 @@ spec:
       introspection_mode: full
   roles:
     - name: acme_guest
-      # config_files:
-      #   - access/acme_guest.inigo
-      # allowed_operations:
-      #   - access/acme_guest.graphql
     - name: acme_member
     - name: acme_employee
     - name: acme_manager

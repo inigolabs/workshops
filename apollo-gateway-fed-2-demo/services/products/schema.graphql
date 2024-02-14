@@ -3,8 +3,8 @@ extend schema
        import: ["@key", "@shareable"])
 
 extend type Query {
-    topProducts(first: Int = 5): [Product]
-    allProducts: [Product] @access(role: ["acme_member"]) @ratelimit(profile: "acme_member", allowance: 3, period: "1m")
+    topProducts(first: Int = 5): [Product] @access(role: ["acme_guest", "acme_member"])
+    allProducts: [Product] @access(role: ["acme_employee", "acme_manager"])
 }
 
 type Product @key(fields: "upc") {
@@ -17,10 +17,4 @@ type Product @key(fields: "upc") {
 directive @access(
     depth: Int
     role: [String]
-) on FIELD_DEFINITION
-
-directive @ratelimit(
-    allowance: Int!
-    period: String!
-    profile: String
 ) on FIELD_DEFINITION

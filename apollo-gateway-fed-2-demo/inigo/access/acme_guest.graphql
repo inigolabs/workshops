@@ -1,0 +1,8 @@
+query topProducts {
+    topProducts {
+        upc
+        name
+        price
+        inStock
+    }
+}
