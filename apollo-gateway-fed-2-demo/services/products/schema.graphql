@@ -4,6 +4,7 @@ extend schema
 
 extend type Query {
     topProducts(first: Int = 5): [Product]
+    allProducts: [Product] @access(role: ["acme_member"]) @ratelimit(profile: "acme_member", allowance: 3, period: "1m")
 }
 
 type Product @key(fields: "upc") {
@@ -12,3 +13,14 @@ type Product @key(fields: "upc") {
     price: Int @shareable
     weight: Int @shareable
 }
+
+directive @access(
+    depth: Int
+    role: [String]
+) on FIELD_DEFINITION
+
+directive @ratelimit(
+    allowance: Int!
+    period: String!
+    profile: String
+) on FIELD_DEFINITION

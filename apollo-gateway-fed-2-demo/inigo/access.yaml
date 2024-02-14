@@ -1,0 +1,20 @@
+kind: Access
+name: apollo-gateway-fed-2-demo
+label: dev
+spec:
+  profiles:
+    - name: guest
+      introspection_mode: partial
+    - name: member
+      introspection_mode: partial
+    - name: employee
+      introspection_mode: full
+  roles:
+    - name: acme_guest
+      # config_files:
+      #   - access/acme_guest.inigo
+      # allowed_operations:
+      #   - access/acme_guest.graphql
+    - name: acme_member
+    - name: acme_employee
+    - name: acme_manager

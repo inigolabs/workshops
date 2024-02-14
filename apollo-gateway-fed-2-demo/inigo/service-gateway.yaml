@@ -2,4 +2,10 @@ kind: Service
 name: apollo-gateway-fed-2-demo
 label: dev
 spec:
-  registry: my-registry
+  path_client_info: "header.User-Agent"
+  path_client_address: "header.X-Forwarded-For"
+  path_user_id: jwt.email
+  path_organization_id: jwt.org_name
+  path_user_profile: jwt.profile
+  path_user_role: jwt.roles
+  anonymous_profile: guest

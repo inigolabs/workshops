@@ -3,11 +3,23 @@ extend schema
         import: ["@key", "@shareable"])
 
 extend type Query {
-    me: User
+    me: User @access(role: ["acme_employee"])
+    login(id: Int, password: String): User @access(role: ["acme_member"])
 }
 
 type User @key(fields: "id") {
     id: ID!
-    name: String
-    username: String @shareable
+    name: String @access(role: ["acme_manager"])
+    username: String @shareable @access(role: ["acme_member"])
 }
+
+directive @access(
+    depth: Int
+    role: [String]
+) on FIELD_DEFINITION
+
+directive @ratelimit(
+    allowance: Int!
+    period: String!
+    profile: String
+) on FIELD_DEFINITION

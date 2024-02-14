@@ -4,14 +4,25 @@ const { buildSubgraphSchema } = require('@apollo/subgraph');
 const { readFileSync } = require("fs");
 const { resolve } = require("path");
 const { parse } = require('graphql');
+const { GraphQLError } = require('graphql');
 
 var cwd = resolve(__dirname, ".");
 var typeDefs = parse(readFileSync(resolve(cwd, "schema.graphql"), "utf-8"));
 
+var myId = 0;
+
 const resolvers = {
   Query: {
+    login(id, password) {
+      if(id > users.length-1) {
+        throw new GraphQLError('Invalid login!');
+      }
+
+      myId = id;
+      return users[id];
+    },
     me() {
-      return users[0];
+      return users[myId];
     }
   },
   User: {
@@ -41,5 +52,11 @@ const users = [
     name: "Alan Turing",
     birthDate: "1912-06-23",
     username: "@complete"
+  },
+  {
+    id: "3",
+    name: "Eric Murphy",
+    birthDate: "1979-04-01",
+    username: "@murphye"
   }
 ];

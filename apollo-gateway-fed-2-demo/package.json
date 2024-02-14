@@ -22,8 +22,9 @@
   "dependencies": {
     "@apollo/gateway": "latest",
     "@apollo/server": "latest",
-    "graphql": "latest",
     "dotenv": "^16.3.1",
-    "inigo.js": "^0.28.1"
+    "graphql": "latest",
+    "inigo-darwin-arm64": "^0.29.6",
+    "inigo.js": "^0.29.6"
   }
 }

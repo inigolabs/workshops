@@ -34,7 +34,8 @@ startStandaloneServer(server, {
 }).then(({ url }) => console.log(`🚀  Inventory subgraph ready at ${url}`));
 
 const inventory = [
-  { upc: "1", inStock: true },
-  { upc: "2", inStock: false },
-  { upc: "3", inStock: true }
+  { upc: "1", inStock: true, warehouseLocation: 21 },
+  { upc: "2", inStock: false, warehouseLocation: 5 },
+  { upc: "3", inStock: true, warehouseLocation: 16 },
+  { upc: "4", inStock: true, warehouseLocation: 2 }
 ];

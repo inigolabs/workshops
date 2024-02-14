@@ -1,0 +1,10 @@
+kind: Gateway
+name: apollo-gateway-fed-2-demo
+label: dev
+spec:
+  composition: none
+  services:
+    - name: accounts
+    - name: reviews
+    - name: products
+    - name: inventory

@@ -6,5 +6,18 @@ type Product @key(fields: "upc") {
     upc: String!
     weight: Int @external
     price: Int @external
-    shippingEstimate: Int @requires(fields: "price weight")
+    shippingEstimate: Int @requires(fields: "price weight") @ratelimit(allowance: 3, period: "1m")
+    inStock: Boolean
+    warehouseLocation: Int @access(role: ["acme_manager"])
 }
+
+directive @access(
+    depth: Int
+    role: [String]
+) on FIELD_DEFINITION
+
+directive @ratelimit(
+    allowance: Int!
+    period: String!
+    profile: String
+) on FIELD_DEFINITION

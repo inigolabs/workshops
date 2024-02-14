@@ -48,7 +48,7 @@ const usernames = [
 const reviews = [
   {
     id: "1",
-    authorID: "1",
+    authorID: "3",
     product: { upc: "1" },
     body: "Love it!"
   },
@@ -69,5 +69,11 @@ const reviews = [
     authorID: "2",
     product: { upc: "1" },
     body: "Prefer something else."
+  },
+  {
+    id: "5",
+    authorID: "3",
+    product: { upc: "4" },
+    body: "Uncomfortable bed."
   }
 ];

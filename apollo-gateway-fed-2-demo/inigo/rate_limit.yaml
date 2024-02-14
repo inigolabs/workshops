@@ -1,0 +1,16 @@
+kind: RateLimit
+name: apollo-gateway-fed-2-demo
+label: dev
+spec:
+  profiles:
+    - name: guest
+    - name: member
+    - name: employee
+    - name: manager
+
+
+
+      # path_calls:
+      #   - path: query.allProducts
+      #     allowance: 5
+      #     period: 10m

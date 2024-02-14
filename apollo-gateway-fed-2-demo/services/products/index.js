@@ -28,6 +28,11 @@ const resolvers = {
     topProducts(_, args) {
       return products.slice(0, args.first);
     }
+  },
+  Query: {
+    allProducts(_) {
+      return products;
+    }
   }
 };
 
@@ -57,5 +62,11 @@ const products = [
     name: "Chair",
     price: 54,
     weight: 50
+  },
+  {
+    upc: "4",
+    name: "Bed",
+    price: 499,
+    weight: 80
   }
 ];

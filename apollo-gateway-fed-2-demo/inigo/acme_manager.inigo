@@ -1,0 +1,27 @@
+query {
+    login 
+    logout
+
+    films {
+        director
+        title
+        characters {
+            name
+            appearedIn
+        }
+    }
+    people
+}
+
+type Film {
+    title
+    director
+    characters
+}
+
+type Person {
+    name
+    birthYear
+    height
+    ssn
+}
